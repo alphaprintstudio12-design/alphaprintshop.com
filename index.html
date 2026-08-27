@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="lo" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alphaprint — ເສື້ອພິມລາຍ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Noto+Sans+Lao:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="Img/LOGO/LOGO copy.png">
+
+  <style>
+  :root{
+    --red-900:#5c0d16;
+    --red-700:#8a1220;
+    --red-600:#c81e2c;
+    --red-500:#e02a38;
+    --gold:#d9a441;
+    --gold-dim:#a97e34;
+  }
+  html[data-theme="light"]{
+    --bg:#f5ece2;
+    --bg-soft:#efe1d2;
+    --card:#fbf4ea;
+    --ink:#241a15;
+    --ink-soft:#5a4a3f;
+    --line:#d8c4ad;
+    --line-strong:#241a15;
+    --shadow:rgba(36,26,21,0.18);
+  }
+  html[data-theme="dark"]{
+    --bg:#17110e;
+    --bg-soft:#1f1712;
+    --card:#251c16;
+    --ink:#f3e6d8;
+    --ink-soft:#c7b3a0;
+    --line:#4a382c;
+    --line-strong:#e8d9c8;
+    --shadow:rgba(0,0,0,0.5);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  body,button,input{
+    font-family:'Inter','Noto Sans Thai','Noto Sans Lao',sans-serif;
+  }
+  html,body{
+    background:var(--bg);
+    color:var(--ink);
+    transition:background .25s ease,color .25s ease;
+  }
+  .display{
+    font-family:'Anton','Noto Sans Thai','Noto Sans Lao',sans-serif;
+    letter-spacing:.5px;
+  }
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ===== rail header ===== */
+  header.site{
+    position:sticky;top:0;z-index:40;
+    background:var(--bg);
+    border-bottom:2px solid var(--line-strong);
+  }
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px 8px;
+    max-width:1200px;margin:0 auto;
+    gap:16px;flex-wrap:wrap;
+  }
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-mark{
+    width:40px;height:40px;border-radius:8px;
+    background:linear-gradient(160deg,var(--red-600),var(--red-900));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:'Anton',sans-serif;font-size:20px;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);
+  }
+  .logo-text{line-height:1.1;}
+  .logo-text .en{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:1px;color:var(--red-600);}
+  .logo-text .sub{font-size:12px;color:var(--ink-soft);}
+
+  .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .lang-switch{
+    display:flex;border:1.5px solid var(--line-strong);border-radius:999px;overflow:hidden;
+  }
+  .lang-switch button{
+    background:transparent;border:none;padding:6px 12px;font-size:12px;font-weight:700;
+    color:var(--ink-soft);letter-spacing:.5px;
+  }
+  .lang-switch button.active{background:var(--red-600);color:#fff;}
+  .theme-toggle{
+    border:1.5px solid var(--line-strong);border-radius:999px;
+    width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+    background:transparent;color:var(--ink);font-size:16px;
+  }
+
+  nav.rail{
+    max-width:1200px;margin:0 auto;
+    padding:14px 24px 0;
+    position:relative;
+  }
+  nav.rail::before{
+    content:"";position:absolute;left:24px;right:24px;top:32px;height:2px;background:var(--line-strong);
+  }
+  .rail-items{display:flex;gap:8px;position:relative;flex-wrap:wrap;}
+  .tag-tab{
+    position:relative;
+    background:var(--card);
+    border:1.5px dashed var(--line-strong);
+    border-bottom:none;
+    border-radius:10px 10px 0 0;
+    padding:10px 18px 14px;
+    font-weight:700;font-size:14px;
+    color:var(--ink-soft);
+    top:2px;
+  }
+  .tag-tab::before{
+    content:"";position:absolute;left:50%;top:-9px;transform:translateX(-50%);
+    width:8px;height:8px;border-radius:50%;
+    background:var(--bg);border:1.5px solid var(--line-strong);
+  }
+  .tag-tab.active{
+    color:#fff;background:var(--red-600);border-color:var(--red-600);
+    top:0;box-shadow:0 -2px 0 0 var(--red-900) inset;
+  }
+  .tag-tab.active::before{background:var(--gold);border-color:var(--gold-dim);}
+
+  /* ===== hero ===== */
+  .hero{
+    max-width:1200px;margin:0 auto;padding:56px 24px 32px;
+    display:flex;gap:32px;align-items:center;flex-wrap:wrap;
+  }
+  .hero-copy{flex:1 1 360px;min-width:280px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--red-600);margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--red-600);}
+  .hero h1{
+    font-size:clamp(34px,5vw,58px);margin:0 0 14px;line-height:1.05;color:var(--ink);
+  }
+  .hero h1 span{color:var(--red-600);}
+  .hero p{color:var(--ink-soft);font-size:16px;line-height:1.7;max-width:46ch;margin:0 0 22px;}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 22px;border-radius:8px;font-weight:700;font-size:14px;
+    border:1.5px solid var(--line-strong);text-decoration:none;
+  }
+  .btn.primary{background:var(--red-600);border-color:var(--red-600);color:#fff;}
+  .btn.ghost{background:transparent;color:var(--ink);}
+
+  .hero-swatch{
+    flex:0 0 280px;
+    aspect-ratio:1/1;max-width:280px;
+    border-radius:16px;
+    border:2px dashed var(--line-strong);
+    background:
+      repeating-linear-gradient(135deg,var(--red-600) 0 18px,var(--red-700) 18px 36px);
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hero-swatch .tag{
+    background:var(--gold);color:#3a2a10;font-family:'Anton',sans-serif;
+    padding:10px 16px;border-radius:6px;transform:rotate(-6deg);
+    box-shadow:0 6px 14px rgba(0,0,0,.35);font-size:14px;letter-spacing:1px;
+  }
+
+  /* ===== section ===== */
+  .section{max-width:1200px;margin:0 auto;padding:8px 24px 64px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .section-head h2{font-size:26px;margin:0;}
+  .section-head .count{color:var(--ink-soft);font-size:13px;}
+
+  .toolbar{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .search-box{
+    position:relative;flex:1 1 220px;max-width:320px;
+  }
+  .search-box input{
+    width:100%;padding:9px 34px 9px 14px;border-radius:999px;
+    border:1.5px solid var(--line-strong);background:var(--card);color:var(--ink);
+    font-size:13px;outline:none;
+  }
+  .search-box input:focus{border-color:var(--red-600);}
+  .search-box .clear-btn{
+    position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    width:22px;height:22px;border-radius:50%;border:none;background:transparent;
+    color:var(--ink-soft);font-size:14px;display:none;align-items:center;justify-content:center;
+  }
+  .search-box.has-value .clear-btn{display:flex;}
+  .sort-select{
+    padding:9px 14px;border-radius:999px;border:1.5px solid var(--line-strong);
+    background:var(--card);color:var(--ink);font-size:13px;font-weight:600;
+  }
+  .month-header{
+    grid-column:1/-1;
+    display:flex;align-items:center;gap:10px;
+    margin:6px 0 -4px;
+    font-family:'Anton','Noto Sans Thai','Noto Sans Lao',sans-serif;
+    letter-spacing:.5px;font-size:15px;color:var(--red-600);
+  }
+  .month-header::after{content:"";flex:1;height:2px;background:var(--line);}
+  .no-results{grid-column:1/-1;text-align:center;color:var(--ink-soft);padding:40px 0;font-size:14px;}
+
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1.5px dashed var(--line);
+    border-radius:14px;
+    padding:16px 16px 18px;
+    position:relative;
+    transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+    cursor:pointer;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 28px var(--shadow);border-color:var(--red-600);}
+  .card:focus-visible{outline:3px solid var(--red-600);outline-offset:2px;}
+  .card .hole{
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    width:14px;height:14px;border-radius:50%;background:var(--bg);border:1.5px solid var(--line);
+  }
+  .card-art{
+    aspect-ratio:1/1;border-radius:10px;margin-top:8px;margin-bottom:14px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .card-art svg{width:78%;height:78%;}
+  .card-art img{width:100%;height:100%;object-fit:contain;}
+  .card h3{font-size:16px;margin:0 0 6px;}
+  .card .code{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;
+    color:var(--gold-dim);background:transparent;border:1px solid var(--gold-dim);
+    border-radius:999px;padding:3px 10px;margin-bottom:8px;
+  }
+  .card .meta{font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+  .card .price{font-size:14px;font-weight:800;color:var(--red-600);margin-top:8px;}
+  .card .view-btn{
+    margin-top:12px;width:100%;background:transparent;border:1.5px solid var(--line-strong);
+    border-radius:8px;padding:9px;font-weight:700;font-size:13px;color:var(--ink);
+  }
+  .card:hover .view-btn{background:var(--red-600);border-color:var(--red-600);color:#fff;}
+
+  /* ===== modal ===== */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(10,6,4,.6);
+    display:none;align-items:center;justify-content:center;z-index:100;padding:20px;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--card);max-width:640px;width:100%;
+    border-radius:16px;border:2px solid var(--line-strong);
+    padding:26px;position:relative;max-height:88vh;overflow-y:auto;
+  }
+  .modal-close{
+    position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;
+    border:1.5px solid var(--line-strong);background:transparent;color:var(--ink);font-size:16px;
+  }
+  .modal-top{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px;}
+  .modal-art{
+    flex:0 0 180px;height:180px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;cursor:zoom-in;
+  }
+  .modal-art svg{width:80%;height:80%;}
+  .modal-art img{width:100%;height:100%;object-fit:contain;}
+  .modal-art::after{
+    content:"🔍";position:absolute;bottom:8px;right:8px;
+    font-size:14px;background:var(--bg);border:1.5px solid var(--line-strong);
+    border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* ===== fullscreen image viewer ===== */
+  .fs-overlay{
+    position:fixed;inset:0;background:rgba(8,5,3,.94);
+    display:none;align-items:center;justify-content:center;z-index:200;padding:24px;
+  }
+  .fs-overlay.open{display:flex;}
+  .fs-art{
+    width:min(82vw,560px);height:min(82vw,560px);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fs-art svg{width:100%;height:100%;}
+  .fs-art img{width:100%;height:100%;object-fit:contain;border-radius:8px;}
+  .fs-close{
+    position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;
+    border:1.5px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);
+    color:#fff;font-size:18px;
+  }
+  .fs-caption{
+    position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+    color:#f3e6d8;font-size:13px;text-align:center;
+  }
+  .modal-info h2{margin:0 0 8px;font-size:22px;}
+  .modal-info .code{font-size:12px;font-weight:700;color:var(--gold-dim);border:1px solid var(--gold-dim);border-radius:999px;padding:3px 10px;}
+  .spec-table{width:100%;border-collapse:collapse;margin-top:16px;}
+  .spec-table tr{border-top:1px dashed var(--line);}
+  .spec-table td{padding:11px 4px;font-size:14px;}
+  .spec-table td.k{color:var(--ink-soft);width:40%;font-weight:600;}
+  .modal-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+  .btn.wa{background:#25D366;border-color:#25D366;color:#08331d;}
+  .btn.fb{background:#1877F2;border-color:#1877F2;color:#fff;}
+
+  /* ===== floating contact ===== */
+  .float-contact{
+    position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:60;
+  }
+  .float-contact a{
+    width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 18px var(--shadow);font-size:20px;border:2px solid rgba(255,255,255,.25);
+  }
+  .float-contact .wa{background:#c2c2c2;color:#c2c2c2;}
+  .float-contact .fb{background:#c2c2c2;color:#c2c2c2;}
+
+  footer{
+    border-top:2px solid var(--line-strong);padding:28px 24px;
+    max-width:1200px;margin:0 auto;color:var(--ink-soft);font-size:13px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;
+  }
+  .footer-col{display:flex;flex-direction:column;gap:4px;max-width:460px;line-height:1.6;}
+  .footer-address strong{color:var(--ink);font-size:13px;letter-spacing:.3px;}
+
+  @media (max-width:640px){
+    .hero{padding-top:32px;}
+    .hero-swatch{display:none;}
+    footer{flex-direction:column;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-mark">
+        <img src="Img/LOGO/LOGO.png" alt="ALPHAPRINT Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      </div>
+      <div class="logo-text">
+        <div class="en">ALPHAPRINT</div>
+        <div class="sub" id="logoSub">ເສື້ອພິມລາຍ</div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button data-lang="th">TH</button>
+        <button data-lang="la" class="active">LA</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+    </div>
+  </div>
+  <nav class="rail">
+    <div class="rail-items" id="railItems"></div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow" data-i18n="eyebrow">ຮ້ານອອກແບບ ແລະ ຜະລິດເສື້ອພິມລາຍ</div>
+    <h1 data-i18n="heroTitle">ອອກແບບ<span>ຜະລິດ</span> ຄົບຈົບໃນບ່ອນດຽວ</h1>
+    <p data-i18n="heroDesc">ເລືອກແບບເສື້ອທີ່ໃຊ່ ເບິ່ງລາຍລະອຽດຄໍເສື້ອ ແຂນເສື້ອ ແລະ ບ່າໄຫຼ່ ແລ້ວທັກຫາພວກເຮົາເພື່ອສັ່ງພິມໄດ້ທັນທີ</p>
+    <div class="hero-cta">
+      <a class="btn primary" href="#catalog" id="ctaBrowse" data-i18n="ctaBrowse">ເບິ່ງສິນຄ້າທັງໝົດ</a>
+      <a class="btn ghost" id="heroWa" target="_blank" data-i18n="ctaWaShort">ADDMIN1</a>
+    </div>
+  </div>
+  <div class="hero-swatch"><div class="tag display">
+    <img src="Img/THUMB/ORDER/Team Jersey/M26-5004 V2 copy.jpg" alt="" width="280" height="280" loading="eager" fetchpriority="high" decoding="async" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg';}">
+  </div></div>
+</section>
+
+<section class="section" id="catalog">
+  <div class="section-head">
+    <h2 id="catTitle">ທັງໝົດ</h2>
+    <span class="count" id="catCount"></span>
+  </div>
+  <div class="toolbar">
+    <div class="search-box" id="searchBox">
+      <input type="text" id="searchInput" autocomplete="off">
+      <button class="clear-btn" id="searchClear" aria-label="Clear">✕</button>
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="newest">ใหม่สุด</option>
+      <option value="oldest">เก่าสุด</option>
+    </select>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-top">
+      <div class="modal-art" id="modalArt"></div>
+      <div class="modal-info">
+        <span class="code" id="modalCode"></span>
+        <h2 id="modalName"></h2>
+      </div>
+    </div>
+    <table class="spec-table">
+      <tbody id="specBody"></tbody>
+    </table>
+    <div class="modal-actions">
+      <a class="btn wa" id="modalWa" target="_blank"><span data-i18n="ctaWaShort">ADDMIN1</span></a>
+      <a class="btn fb" id="modalFb" target="_blank"><span data-i18n="ctaFbShort">ທັກຜ່ານ Facebook</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="fs-overlay" id="fsOverlay">
+  <button class="fs-close" id="fsClose">✕</button>
+  <div class="fs-art" id="fsArt"></div>
+  <div class="fs-caption" id="fsCaption"></div>
+</div>
+
+<div class="float-contact">
+  <a class="wa" id="floatWa" target="_blank" aria-label="WhatsApp">
+    <img src="Img/Icon/wa1.svg">
+  </a>
+  <a class="fb" id="floatFb" target="_blank" aria-label="Facebook">
+    <img src="Img/Icon/fb.svg">
+  </a>
+</div>
+
+<footer>
+  <div class="footer-col">
+    <span data-i18n="footerName">© Alphaprint — ຮ້ານອອກແບບ ແລະ ຜະລິດເສື້ອພິມລາຍ</span>
+    <span data-i18n="footerNote">ແກ້ໄຂລິ້ງ WhatsApp / Facebook ໃນໂຄ້ດໃຫ້ເປັນຂອງຮ້ານແທ້ກ່ອນນຳໃຊ້</span>
+  </div>
+  <div class="footer-col footer-address">
+    <strong id="footerAddressLabel" data-i18n="footerAddress">ທີ່ຢູ່ຮ້ານ</strong>
+    <span id="footerAddressText"></span>
+  </div>
+</footer>
+
+<script>
+/* ---------- CONFIG: แก้ลิงก์ติดต่อจริงตรงนี้ ---------- */
+const CONTACT = {
+  whatsapp: "https://wa.me/8562078891672",
+  facebook: "https://www.facebook.com/profile.php?id=61589133735977",
+  address: "Vientiane, Laos"
+};
+
+/* ---------- i18n ---------- */
+const I18N = {
+  th:{
+    eyebrow:"ออกแบบและผลิตเสื้อพิมพ์ลาย",
+    heroTitle:'ออกแบบ <span>ผลิต</span> ครบจบในที่เดียว',
+    heroDesc:"เลือกแบบเสื้อที่ใช่ ดูรายละเอียดคอเสื้อ แขนเสื้อ และทรงบ่า แล้วทักหาเราเพื่อสั่งออกแบบทันที",
+    ctaBrowse:"ดูสินค้าทั้งหมด",
+    ctaWa:"ทัก WhatsApp",
+    ctaWaShort:"สั่งผ่าน WhatsApp",
+    ctaFbShort:"ทักผ่าน Facebook",
+    viewDetail:"ดูรายละเอียด",
+    specOrder:"รหัสออเดอร์",
+    specCollar:"คอเสื้อ",
+    specSleeve:"แขนเสื้อ",
+    specShoulder:"บ่าไหล่",
+    specLeg:"ประเภทขา",
+    specFabric:"เนื้อผ้า",
+    specPrice:"ราคา",
+    priceFrom:"เริ่มต้น",
+    footerName:"© Alphaprint — ร้านออกแบบและผลิตเสื้อพิมพ์ลาย",
+    footerNote:"https://www.facebook.com/profile.php?id=61589133735977",
+    itemsCount:"รายการ",
+    logoSub:"ร้านออกแบบและผลิตเสื้อพิมพ์ลาย",
+    footerAddress:"ที่อยู่ร้าน",
+    cats:{all:"ทั้งหมด",team:"เสื้อทีมงาน",sport:"เสื้อกีฬา",screen:"เสื้อสกรีน",pants:"กางเกง",sticker:"สติกเกอร์",fabric:"เนื้อผ้า"},
+    searchPlaceholder:"ค้นหาด้วยรหัสสินค้า...",
+    sortNewest:"ใหม่สุด",
+    sortOldest:"เก่าสุด",
+    otherMonth:"อื่นๆ",
+    noResults:"ไม่พบสินค้าที่ค้นหา",
+    monthNames:["","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"]
+  },
+  la:{
+    eyebrow:"ອອກແບບ ແລະ ຜະລິດເສື້ອພິມລາຍ",
+    heroTitle:'ອອກແບບ <span>ຜະລິດ</span> ຄົບຈົບໃນບ່ອນດຽວ',
+    heroDesc:"ເລືອກແບບເສື້ອທີ່ໃຊ່ ເບິ່ງລາຍລະອຽດຄໍເສື້ອ ແຂນເສື້ອ ແລະ ບ່າໄຫຼ່ ແລ້ວທັກຫາພວກເຮົາເພື່ອສັ່ງອອກແບບທັນທີ",
+    ctaBrowse:"ເບິ່ງສິນຄ້າທັງໝົດ",
+    ctaWa:"ທັກ WhatsApp",
+    ctaWaShort:"ສັ່ງຜ່ານ WhatsApp",
+    ctaFbShort:"ທັກຜ່ານ Facebook",
+    viewDetail:"ເບິ່ງລາຍລະອຽດ",
+    specOrder:"ລະຫັດອໍເດີ້",
+    specCollar:"ຄໍເສື້ອ",
+    specSleeve:"ແຂນເສື້ອ",
+    specShoulder:"ບ່າໄຫຼ່",
+    specLeg:"ປະເພດຂາ",
+    specFabric:"ເນື້ອຜ້າ",
+    specPrice:"ລາຄາ",
+    priceFrom:"ເລີ່ມຕົ້ນ",
+    footerName:"© Alphaprint — ຮ້ານອອກແບບ ແລະ ຜະລິດເສື້ອພິມລາຍ",
+    footerNote:"https://www.facebook.com/profile.php?id=61589133735977",
+    itemsCount:"ລາຍການ",
+    logoSub:"ເສື້ອພິມລາຍ",
+    footerAddress:"ທີ່ຢູ່ຮ້ານ",
+    cats:{all:"ທັງໝົດ",team:"ເສື້ອທີມງານ",sport:"ເສື້ອກິລາ",screen:"ເສື້ອສະກິນ",pants:"ໂສ້ງ",sticker:"ສະຕິກເກີ້",fabric:"ຜ້າ"},
+    searchPlaceholder:"ຄົ້ນຫາດ້ວຍລະຫັດສິນຄ້າ...",
+    sortNewest:"ໃໝ່ສຸດ",
+    sortOldest:"ເກົ່າສຸດ",
+    otherMonth:"ອື່ນໆ",
+    noResults:"ບໍ່ພົບສິນຄ້າທີ່ຄົ້ນຫາ",
+    monthNames:["","ມັງກອນ","ກຸມພາ","ມີນາ","ເມສາ","ພຶດສະພາ","ມິຖຸນາ","ກໍລະກົດ","ສິງຫາ","ກັນຍາ","ຕຸລາ","ພະຈິກ","ທັນວາ"]
+  },
+  en:{
+    eyebrow:"Custom Shirt Design & Print Studio",
+    heroTitle:'Design , <span>print </span>, All in One',
+    heroDesc:"Pick a style, check the collar, sleeve and shoulder details, then message us to place your design.",
+    ctaBrowse:"Browse all products",
+    ctaWa:"Message on WhatsApp",
+    ctaWaShort:"Order via WhatsApp",
+    ctaFbShort:"Message on Facebook",
+    viewDetail:"View details",
+    specOrder:"Order code",
+    specCollar:"Collar",
+    specSleeve:"Sleeve",
+    specShoulder:"Shoulder",
+    specLeg:"Leg length",
+    specFabric:"Fabric",
+    specPrice:"Price",
+    priceFrom:"Starting from",
+    footerName:"© Alphaprint — Custom Shirt Design & Print Studio",
+    footerNote:"https://www.facebook.com/profile.php?id=61589133735977",
+    itemsCount:"items",
+    logoSub:"Custom Print Shirts",
+    footerAddress:"Shop address",
+    cats:{all:"All",team:"Team Shirts",sport:"Sport Shirts",screen:"Screen Print",pants:"Pants",sticker:"Sticker",fabric:"Fabric"},
+    searchPlaceholder:"Search by order code...",
+    sortNewest:"Newest first",
+    sortOldest:"Oldest first",
+    otherMonth:"Others",
+    noResults:"No matching products",
+    monthNames:["","January","February","March","April","May","June","July","August","September","October","November","December"]
+  }
+};
+
+const TERMS = {
+  collar:{
+    round:{th:"คอกลม",la:"ຄໍມົນ",en:"Round neck"},
+    polo:{th:"คอโปโล",la:"ຄໍໂປໂລ",en:"Polo collar"},
+    vneck:{th:"คอวี",la:"ຄໍວີ",en:"V-neck"},
+    vpok:{th:"คอวีปก",la:"ຄໍວີປົກ",en:"V-pok"},
+    pokvtud:{th:"คอปกวีตัด",la:"ຄໍປົກວີຕັດ",en:"Pok-V-Tud"},
+    vkwai:{th:"คอวีไข่ว",la:"ຄໍວີໄຂ່ວ",en:"Vkwai"},
+    fivelieam:{th:"คอ5เหลี่ยม",la:"ຄໍ5ຫຼ່ຽມ",en:"5Lieam"},
+    vtud:{th:"คอวีตัด",la:"ຄໍວີຕັດ",en:"V-Tud"}
+  },
+  sleeve:{
+    short:{th:"แขนสั้น",la:"ແຂນສັ້ນ",en:"Short sleeve"},
+    long:{th:"แขนยาว",la:"ແຂນຍາວ",en:"Long sleeve"},
+    sleeveless:{th:"ไแขนกุด",la:"ແຂນກຸດ",en:"Sleeveless"}
+  },
+  shoulder:{
+    normal:{th:"ไหล่ปกติ",la:"ບ່າປົກກະຕິ",en:"Standard shoulder"},
+    raglan:{th:"ไหล่แร็กแลน",la:"ບ່າແຣັກແລນ",en:"Raglan shoulder"},
+    slope:{th:"ไหล่สโลป",la:"ບ່າສະໂລບ",en:"Slope shoulder"}
+  },
+  leg:{
+    short:{th:"ขาสั้น",la:"ຂາສັ້ນ",en:"Short leg"},
+    long:{th:"ขายาว",la:"ຂາຍາວ",en:"Long leg"}
+  },
+  fabricType:{
+    cotton:{th:"ผ้าคอตตอน",la:"ຜ້າຝ້າຍ",en:"Cotton"},
+    micro:{th:"ผ้าไมโคร",la:"ຜ້າໄມໂຄ",en:"Micro",img:"Img/Texture/micro.jpeg"},
+    drytech:{th:"ผ้าดรายเท็ค",la:"ຜ້າດາຍເທັກ",en:"Drytech"},
+    ricepattern:{th:"ผ้าเม็ดข้าวสาร",la:"ຜ້າເມັດເຂົ້າສານ",en:"Rice Pattern"},
+    wiremesh:{th:"ผ้าตาข่ายเหล็ก",la:"ຜ້າຕາລາງເຫຼັກ",en:"Wire mesh"},
+    honeycomb:{th:"ผ้ารังผึ้ง",la:"ຜ້າຮັງເຜິ້ງ",en:"Honey Comb"},
+    popcorn:{th:"ผ้าสาลี",la:"ຜ້າສາລີ",en:"Popcorn"}
+  }
+};
+
+/* @ADMIN:NAME_TR:START */
+const NAME_TR = {
+  t1:{th:"ທີມງານ6ລໍ້ພາລວຍ",la:"ທີມງານ6ລໍ້ພາລວຍ",en:"ທີມງານ6ລໍ້ພາລວຍ"},
+  t2:{th:"ທີມງານ6ລໍ້ພາລວຍ",la:"ທີມງານ6ລໍ້ພາລວຍ",en:"ທີມງານ6ລໍ້ພາລວຍ"},
+  t3:{th:"ທີມງານ6ລໍ້ພາລວຍ",la:"ທີມງານ6ລໍ້ພາລວຍ",en:"ທີມງານ6ລໍ້ພາລວຍ"},
+  t4:{th:"พันธมิตรODX",la:"พันธมิตรODX",en:"พันธมิตรODX"},
+  t5:{th:"No name",la:"No name",en:"No name"},
+  t6:{th:"No name",la:"No name",en:"No name"},
+  t7:{th:"No name",la:"No name",en:"No name"},
+  t8:{th:"วัยรุ่นเมืองเหนือ",la:"วัยรุ่นเมืองเหนือ",en:"วัยรุ่นเมืองเหนือ"},
+  t9:{th:"LOUK KHN JON",la:"LOUK KHN JON",en:"LOUK KHN JON"},
+  t10:{th:"LOUK KHN JON",la:"LOUK KHN JON",en:"LOUK KHN JON"},
+  t11:{th:"ทีมงานยักษ์ใหญ่",la:"ทีมงานยักษ์ใหญ่",en:"ทีมงานยักษ์ใหญ่"},
+  t12:{th:"ทีมงานยักษ์ใหญ่",la:"ทีมงานยักษ์ใหญ่",en:"ทีมงานยักษ์ใหญ่"},
+  t13:{th:"เฮงชวยรวยบางวัน",la:"เฮงชวยรวยบางวัน",en:"เฮงชวยรวยบางวัน"},
+  t14:{th:"W100",la:"W100",en:"W100"},
+  t15:{th:"W100",la:"W100",en:"W100"},
+  t16:{th:"เฉาก๊วยZOY3",la:"เฉาก๊วยZOY3",en:"เฉาก๊วยZOY3"},
+  t17:{th:"ทีมงานสิงห์น้อยนำโชค",la:"ทีมงานสิงห์น้อยนำโชค",en:"ทีมงานสิงห์น้อยนำโชค"},
+  t18:{th:"BLACKພາລຸຍ",la:"BLACKພາລຸຍ",en:"BLACKພາລຸຍ"},
+  t19:{th:"BLACKພາລຸຍ",la:"BLACKພາລຸຍ",en:"BLACKພາລຸຍ"},
+  t20:{th:"BLACKພາລຸຍ",la:"BLACKພາລຸຍ",en:"BLACKພາລຸຍ"},
+  t21:{th:"ທີມງານບ້ານໂນນຫິນແຮ່",la:"ທີມງານບ້ານໂນນຫິນແຮ່",en:"ທີມງານບ້ານໂນນຫິນແຮ່"},
+  t22:{th:"VTK 369",la:"VTK 369",en:"VTK 369"},
+  t23:{th:"VTK 369",la:"VTK 369",en:"VTK 369"},
+  t24:{th:"VTK 369",la:"VTK 369",en:"VTK 369"},
+  t25:{th:"VTK 369",la:"VTK 369",en:"VTK 369"},
+  t26:{th:"THE ONE",la:"THE ONE",en:"THE ONE"},
+  t27:{th:"ທີມງານ6ລໍ້ພີ່ບັງ",la:"ທີມງານ6ລໍ້ພີ່ບັງ",en:"ທີມງານ6ລໍ້ພີ່ບັງ"},
+  t28:{th:"สามเสี่ยวพาลุย",la:"สามเสี่ยวพาลุย",en:"อ"},
+  t29:{th:"เอเย่นน้อย ร้อยคดี",la:"เอเย่นน้อย ร้อยคดี",en:"เอเย่นน้อย ร้อยคดี"},
+  t30:{th:"เอเย่นน้อยร้อยคดี",la:"เอเย่นน้อยร้อยคดี",en:"เอเย่นน้อยร้อยคดี"},
+  t31:{th:"ทีมงานLLYอินทรีเขียว",la:"ทีมงานLLYอินทรีเขียว",en:"อ"},
+  t32:{th:"ทีมงานLLYอินทรีเขียว",la:"ทีมงานLLYอินทรีเขียว",en:"ทีมงานLLYอินทรีเขียว"},
+  t33:{th:"S.R.P.L",la:"S.R.P.L",en:"S.R.P.L"},
+  t34:{th:"ใจปลากัด",la:"ใจปลากัด",en:"ใจปลากัด"},
+  t35:{th:"ใจปลากัด",la:"ใจปลากัด",en:"ใจปลากัด"},
+  t36:{th:"จิกโก๋หลัก3",la:"จิกโก๋หลัก3",en:"จิกโก๋หลัก3"},
+  t37:{th:"ບຸນຈັນບໍລິການ",la:"ບຸນຈັນບໍລິການ",en:"ອ"},
+  t38:{th:"ສອງພໍ່ລູກຂົນສົ່ງ",la:"ສອງພໍ່ລູກຂົນສົ່ງ",en:"ສອງພໍ່ລູກຂົນສົ່ງ"},
+  t39:{th:"ສອງພໍ່ລູກຂົນສົ່ງ",la:"ສອງພໍ່ລູກຂົນສົ່ງ",en:"ສອງພໍ່ລູກຂົນສົ່ງ"},
+  t40:{th:"ສອງພໍ່ລູກຂົນສົ່ງ",la:"ສອງພໍ່ລູກຂົນສົ່ງ",en:"ສອງພໍ່ລູກຂົນສົ່ງ"},
+  t41:{th:"ສອງພໍ່ລູກຂົນສົ່ງ",la:"ສອງພໍ່ລູກຂົນສົ່ງ",en:"ສອງພໍ່ລູກຂົນສົ່ງ"},
+  t42:{th:"HM FAMILY",la:"HM FAMILY",en:"HM FAMILY"},
+  t43:{th:"HM FAMILY",la:"HM FAMILY",en:"HM FAMILY"},
+  t44:{th:"ทีเด็ดน้ำกวนนอนแจ้ง",la:"ทีเด็ดน้ำกวนนอนแจ้ง",en:"ทีเด็ดน้ำกวนนอนแจ้ง"},
+  t45:{th:"ອານຸສິດສາຂາແບງຫຼວງ",la:"ອານຸສິດສາຂາແບງຫຼວງ",en:"ອານຸສິດສາຂາແບງຫຼວງ"},
+  t46:{th:"จัดไปไฟกระพับ",la:"จัดไปไฟกระพับ",en:"จัดไปไฟกระพับ"},
+  t47:{th:"ທີມງານຫວານຄໍເມືອງແບງ",la:"ທີມງານຫວານຄໍເມືອງແບງ",en:"ທີມງານຫວານຄໍເມືອງແບງ"},
+  t48:{th:"ທີມງານຫວານຄໍເມືອງແບງ",la:"ທີມງານຫວານຄໍເມືອງແບງ",en:"ທີມງານຫວານຄໍເມືອງແບງ"},
+  t49:{th:"ทีมงานMM Family",la:"ทีมงานMM Family",en:"ทีมงานMM Family"},
+  t50:{th:"ຊ່າງໄຟໄກບ້ານ",la:"ຊ່າງໄຟໄກບ້ານ",en:"ຊ່າງໄຟໄກບ້ານ"},
+  t51:{th:"ຊ່າງໄຟໄກບ້ານ",la:"ຊ່າງໄຟໄກບ້ານ",en:"ຊ່າງໄຟໄກບ້ານ"},
+  t52:{th:"ທີມງານງັດຫາດ",la:"ທີມງານງັດຫາດ",en:"ທີມງານງັດຫາດ"},
+  t53:{th:"ທີມງານຊົງເອ",la:"ທີມງານຊົງເອ",en:"ທີມງານຊົງເອ"},
+  t54:{th:"ຟາລິດາກາເດັ່ນ",la:"ຟາລິດາກາເດັ່ນ",en:"ຟາລິດາກາເດັ່ນ"},
+  t55:{th:"ໄວລຸ້ນອຸດົມໄຊ",la:"ໄວລຸ້ນອຸດົມໄຊ",en:"ໄວລຸ້ນອຸດົມໄຊ"},
+  t57:{th:"ມສ ທ່າເຮືອ",la:"ມສ ທ່າເຮືອ",en:"ມສ ທ່າເຮືອ"},
+  t58:{th:"ทีมงานพี่น้อย",la:"ทีมงานพี่น้อย",en:"ทีมงานพี่น้อย"},
+  s1:{th:"NONGXANGPHUEK X NONGKAINGUANG",la:"NONGXANGPHUEK X NONGKAINGUANG",en:"NONGXANGPHUEK X NONGKAINGUANG"},
+  s2:{th:"LION X BEN10",la:"LION X BEN10",en:"LION X BEN10"},
+  s3:{th:"LION X BEN0",la:"LION X BEN0",en:"LION X BEN0"},
+  s4:{th:"LION X BEN10",la:"LION X BEN10",en:"LION X BEN10"},
+  s5:{th:"LION X BEN10",la:"LION X BEN10",en:"LION X BEN10"},
+  s6:{th:"PSL FC",la:"PSL FC",en:"PSL FC"},
+  s7:{th:"ALPHAPRINT",la:"ALPHAPRINT",en:"ALPHAPRINT"},
+  t50:{th:"ຊ່າງໄຟໄກບ້ານ",la:"ຊ່າງໄຟໄກບ້ານ",en:"ຊ່າງໄຟໄກບ້ານ"},
+  t57:{th:"ມສ ທ່າເຮືອ",la:"ມສ ທ່າເຮືອ",en:"ມສ ທ່າເຮືອ"},
+  t58:{th:"ทีมงานพี่น้อย",la:"ทีมงานพี่น้อย",en:"ทีมงานพี่น้อย"},
+  t59:{th:"LJ SPORT",la:"LJ SPORT",en:"LJ SPORT"},
+  s8:{th:"LJ SPORT",la:"LJ SPORT",en:"LJ SPORT"},
+  s9:{th:"KM67 SCHOOL",la:"KM67 SCHOOL",en:"KM67 SCHOOL"},
+  s10:{th:"CHOMTHANANSY",la:"CHOMTHANANSY",en:"CHOMTHANANSY"},
+  p1:{th:"THE ONE",la:"THE ONE",en:"THE ONE"},
+  p2:{th:"THE ONE",la:"THE ONE",en:"THE ONE"},
+  p3:{th:"GTA VI",la:"GTA VI",en:"GTA VI"},
+  g1:{th:"NONGXANGPHUEK X NONGKAINGUANG",la:"NONGXANGPHUEK X NONGKAINGUANG",en:"NONGXANGPHUEK X NONGKAINGUANG"},
+  g2:{th:"เอเย่นน้อยร้อยคดี",la:"เอเย่นน้อยร้อยคดี",en:"เอเย่นน้อยร้อยคดี"},
+  st1:{th:"No name",la:"No name",en:"No name"},
+  st2:{th:"ມາເຟຍເປັດນ້ອຍ",la:"ມາເຟຍເປັດນ້ອຍ",en:"ມາເຟຍເປັດນ້ອຍ"},
+  st3:{th:"ทีมเสือไร้พ่าย",la:"ทีมเสือไร้พ่าย",en:"ทีมเสือไร้พ่าย"},
+  st4:{th:"เต้นรถอาบัง",la:"เต้นรถอาบัง",en:"อ"},
+  st5:{th:"ชุ้มไก่อ้ายฟาน",la:"ชุ้มไก่อ้ายฟาน",en:"ชุ้มไก่อ้ายฟาน"},
+  st6:{th:"ช่างอนัน",la:"ช่างอนัน",en:"ช่างอนัน"},
+  f1:{th:"ไมโคร",la:"ໄມໂຄ",en:"Micro"},
+  f2:{th:"ผ้าสาลี",la:"ຜ້າສາລີ",en:"Corn pattern"},
+  f3:{th:"ผ้าดรายเท็ค",la:"ຜ້າດາຍເທັກ",en:"Dry tech"},
+  f4:{th:"ผ้ารังผึ้ง",la:"ຜ້າຮັງເຜິ່ງ",en:"Honey pattern"},
+  f5:{th:"ผ้าเม็ดข้าวสาร",la:"ຜ້າເມັດເຂົ້າສານ",en:"Rice pattern"},
+  f6:{th:"ผ้าตารางเหล็ก",la:"ຜ້າຕາລາງເຫຼັກ",en:"Wire mesh"}
+};
+/* @ADMIN:NAME_TR:END */
+
+/* ---------- รูปภาพสินค้า ----------
+   ใส่ลิงก์รูปภาพจริงของสินค้าแต่ละชิ้นในฟิลด์ "img" ด้านล่างนี้
+   - ใช้ไฟล์ในเครื่อง เช่น "Img/products/AP-T001.jpg" (วางไฟล์ไว้ในโฟลเดอร์ Img/products/)
+   - หรือใช้ลิงก์ URL เต็ม เช่น "https://example.com/photo.jpg"
+   ถ้าไม่ใส่ img (เว้นว่างไว้ "") หรือโหลดรูปไม่สำเร็จ ระบบจะกลับไปแสดงไอคอนเสื้อ SVG แทนอัตโนมัติ
+
+   *** สำคัญ: รูปพรีวิวในหน้าร้าน (การ์ดสินค้า) จะโหลดจากโฟลเดอร์ Img/THUMB/ ก่อนเสมอ
+   (ขนาดไม่เกิน 1000x1000px เพื่อให้โหลดหน้าเว็บเร็วขึ้น) โดยใช้ path เดียวกับรูปเต็ม
+   เช่นถ้ารูปเต็มคือ "Img/ORDER/Team Jersey/M26-5004 copy.jpg"
+   ให้วางไฟล์รูปย่อไว้ที่ "Img/THUMB/ORDER/Team Jersey/M26-5004 copy.jpg"
+   รูปเต็มจะถูกโหลดก็ต่อเมื่อลูกค้ากดปุ่ม "ดูรายละเอียด" เท่านั้น
+   ใช้สคริปต์ make_thumbnails.py ที่แนบมาเพื่อสร้างไฟล์ในโฟลเดอร์ Img/THUMB/ ให้อัตโนมัติ
+   ถ้ายังไม่มีไฟล์ thumbnail ระบบจะโหลดรูปเต็มแทนอัตโนมัติ (เว็บจะโหลดช้ากว่าเดิม แต่ยังใช้งานได้ปกติ)
+------------------------------------ */
+/* ---------- ราคาสินค้า ----------
+   แก้ตัวเลขราคาให้ตรงกับร้านจริง (หน่วยเป็นกีบ ₭) — สำหรับ ผ้า ราคาจะแสดงเป็น "เริ่มต้น" อัตโนมัติ
+------------------------------------ */
+/* @ADMIN:PRODUCTS:START */
+const PRODUCTS = [
+  {id:"t1",cat:"team",code:"M26-5004",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5004 copy.jpg"},
+  {id:"t2",cat:"team",code:"M26-5004",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg"},
+  {id:"t3",cat:"team",code:"M26-5004",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5004 V3 copy.jpg"},
+  {id:"t4",cat:"team",code:"M26-5005",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-5005 copy.jpg"},
+  {id:"t5",cat:"team",code:"M26-5006",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-5006 copy.jpg"},
+  {id:"t6",cat:"team",code:"M26-5007",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-5007 copy.jpg"},
+  {id:"t7",cat:"team",code:"M26-5010",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5010 copy.jpg"},
+  {id:"t8",cat:"team",code:"M26-5011",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5011 copy.jpg"},
+  {id:"t9",cat:"team",code:"M26-5012",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5012 copy.jpg"},
+  {id:"t10",cat:"team",code:"M26-5012",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5012 V2 copy.jpg"},
+  {id:"t11",cat:"team",code:"M26-5023",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5023 copy.jpg"},
+  {id:"t12",cat:"team",code:"M26-5023",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5023 V2 copy.jpg"},
+  {id:"t13",cat:"team",code:"M26-5024",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5024 copy.jpg"},
+  {id:"t14",cat:"team",code:"M26-5026",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5026 copy.jpg"},
+  {id:"t15",cat:"team",code:"M26-5026",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5026 V2 copy.jpg"},
+  {id:"t16",cat:"team",code:"M26-5027",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5027 copy.jpg"},
+  {id:"t17",cat:"team",code:"M26-5028",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5028 copy.jpg"},
+  {id:"t18",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5029 copy.jpg"},
+  {id:"t19",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5029 V2 copy.jpg"},
+  {id:"t20",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5029 V3 copy.jpg"},
+  {id:"t21",cat:"team",code:"M26-6005",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6005 copy.jpg"},
+  {id:"t22",cat:"team",code:"M26-6010",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-6010 copy.jpg"},
+  {id:"t23",cat:"team",code:"M26-6010",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6010 V2 copy.jpg"},
+  {id:"t24",cat:"team",code:"M26-6010",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6010 V5 copy.jpg"},
+  {id:"t25",cat:"team",code:"M26-6010",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-6010 V6 copy.jpg"},
+  {id:"t26",cat:"team",code:"M262-6012",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6012 copy.jpg"},
+  {id:"t27",cat:"team",code:"M26-6013",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-6013 copy.jpg"},
+  {id:"t28",cat:"team",code:"M26-6023",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6023 copy.jpg"},
+  {id:"t29",cat:"team",code:"M26-6024",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-6024 copy.jpg"},
+  {id:"t30",cat:"team",code:"M26-6024",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6024 V2 copy.jpg"},
+  {id:"t31",cat:"team",code:"M26-7001",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7001 copy.jpg"},
+  {id:"t32",cat:"team",code:"M26-7001",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-7001 V2 copy.jpg"},
+  {id:"t33",cat:"team",code:"M26-7002",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7002 copy.jpg"},
+  {id:"t34",cat:"team",code:"M26-7003",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7003 copy.jpg"},
+  {id:"t35",cat:"team",code:"M26-7003",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-7003 V2 copy.jpg"},
+  {id:"t36",cat:"team",code:"M26-7004",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7004 copy.jpg"},
+  {id:"t37",cat:"team",code:"M26-7005",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7005 copy.jpg"},
+  {id:"t38",cat:"team",code:"M26-7006",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 copy.jpg"},
+  {id:"t39",cat:"team",code:"M26-7006",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 V2 copy.jpg"},
+  {id:"t40",cat:"team",code:"M26-7006",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 V3 copy.jpg"},
+  {id:"t41",cat:"team",code:"M26-7006",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 V4 copy.jpg"},
+  {id:"t42",cat:"team",code:"M26-7007",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7007 copy.jpg"},
+  {id:"t43",cat:"team",code:"M26-7007",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7007 V2 copy.jpg"},
+  {id:"t44",cat:"team",code:"M26-7009",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7009 copy.jpg"},
+  {id:"t45",cat:"team",code:"M26-7010",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7010 copy.jpg"},
+  {id:"t46",cat:"team",code:"M26-7011",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-7011 copy.jpg"},
+  {id:"t47",cat:"team",code:"M26-7012",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-7012 copy.jpg"},
+  {id:"t48",cat:"team",code:"M26-7012",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-7012 V2 copy.jpg"},
+  {id:"t49",cat:"team",code:"M26-7015",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7015 copy.jpg"},
+  {id:"t50",cat:"team",code:"M26-8001",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-8001 V3 copy.jpg"},
+  {id:"t51",cat:"team",code:"M26-8001",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-8001 V4 copy.jpg"},
+  {id:"t52",cat:"team",code:"M26-8015",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-8015 V2 copy.jpg"},
+  {id:"t53",cat:"team",code:"M26-8016",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-8016 copy.jpg"},
+  {id:"t54",cat:"team",code:"M26-8019",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-8019 copy.jpg"},
+  {id:"t55",cat:"team",code:"M26-8020",collar:"fivelieam",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-8020 copy.jpg"},
+  {id:"t57",cat:"sport",code:"M26-2010",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8010 copy.jpg"},
+  {id:"t58",cat:"sport",code:"M26-8012",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8012 copy.jpg"},
+  {id:"s1",cat:"sport",code:"K26-6021",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/K26-6021 copy.jpg"},
+  {id:"s2",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Sport Jersey/K26-7011 copy.jpg"},
+  {id:"s3",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Sport Jersey/K26-7011 V2 copy.jpg"},
+  {id:"s4",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Sport Jersey/K26-7011 V3 copy.jpg"},
+  {id:"s5",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Sport Jersey/K26-7011 V5 copy.jpg"},
+  {id:"s6",cat:"sport",code:"M26-5030",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Sport Jersey/M26-5030 copy.jpg"},
+  {id:"s7",cat:"sport",code:"M26-6004",collar:"polo",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-6004 copy.jpg"},
+  {id:"t50",cat:"sport",code:"M26-6008",collar:"vneck",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Sport Jersey/M26-6008 copy.jpg"},
+  {id:"t57",cat:"sport",code:"M26-8003",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8003 copy.jpg"},
+  {id:"t58",cat:"sport",code:"M26-8004",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8004 copy.jpg"},
+  {id:"t59",cat:"sport",code:"M26-8005",collar:"vpok",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8005 copy.jpg"},
+  {id:"s8",cat:"sport",code:"M26-8006",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Sport Jersey/M26-8006 copy.jpg"},
+  {id:"s9",cat:"sport",code:"M26-8007",collar:"vneck",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Sport Jersey/M26-8007 copy.jpg"},
+  {id:"s10",cat:"sport",code:"M26-8011",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8011 copy.jpg"},
+  {id:"p1",cat:"screen",code:"M26-5015",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-5015 copy.jpg"},
+  {id:"p2",cat:"screen",code:"M26-5015",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-5015 V2 copy.jpg"},
+  {id:"p3",cat:"screen",code:"M26-8013",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8013 copy.jpg"},
+  {id:"g1",cat:"pants",code:"M26-6020",leg:"short",price:90000,img:"Img/ORDER/Pant/M26-6020 short copy.jpg"},
+  {id:"g2",cat:"pants",code:"M26-6024",leg:"short",price:90000,img:"Img/ORDER/Pant/M26-6024 SONG copy.jpg"},
+  {id:"st1",cat:"sticker",code:"1",price:180000,img:"Img/ORDER/Sticker/1 copy.jpg"},
+  {id:"st2",cat:"sticker",code:"2",price:180000,img:"Img/ORDER/Sticker/2 copy.jpg"},
+  {id:"st3",cat:"sticker",code:"4",price:180000,img:"Img/ORDER/Sticker/4 copy.jpg"},
+  {id:"st4",cat:"sticker",code:"5",price:180000,img:"Img/ORDER/Sticker/5 copy.jpg"},
+  {id:"st5",cat:"sticker",code:"6",price:180000,img:"Img/ORDER/Sticker/6 copy.jpg"},
+  {id:"st6",cat:"sticker",code:"7",price:180000,img:"Img/ORDER/Sticker/7 copy.jpg"},
+  {id:"f1",cat:"fabric",code:"....",price:110000,img:"Img/Texture/micro.jpeg"},
+  {id:"f2",cat:"fabric",code:"...",price:110000,img:"Img/Texture/corn.jpeg"},
+  {id:"f3",cat:"fabric",code:"...",price:110000,img:"Img/Texture/dry tech.jpeg"},
+  {id:"f4",cat:"fabric",code:"...",price:110000,img:"Img/Texture/honey.jpeg"},
+  {id:"f5",cat:"fabric",code:"...",price:110000,img:"Img/Texture/rice.jpeg"},
+  {id:"f6",cat:"fabric",code:"...",price:110000,img:"Img/Texture/wire mesh.jpeg"}
+];
+/* @ADMIN:PRODUCTS:END */
+
+const CAT_ORDER = ["team","sport","screen","pants","sticker","fabric"];
+const NAV_ORDER = ["all", ...CAT_ORDER];
+const CAT_COLORS = {
+  team:["#c81e2c","#8a1220"],
+  sport:["#e02a38","#5c0d16"],
+  screen:["#8a1220","#d9a441"],
+  pants:["#5c0d16","#241a15"],
+  sticker:["#d9a441","#c81e2c"],
+  fabric:["#d9a441","#8a1220"]
+};
+
+function formatPrice(p){
+  const amount = p.price.toLocaleString("en-US") + " ₭";
+  return p.cat === "fabric" ? `${t("priceFrom")} ${amount}` : amount;
+}
+
+let lang = "la";
+let activeCat = "all";
+let currentProduct = null;
+let sortOrder = "newest";
+let searchQuery = "";
+
+/* ---------- thumbnail helper ----------
+   รูปพรีวิวจะโหลดจากโฟลเดอร์ Img/THUMB/ (ขนาดไม่เกิน 1000x1000px)
+   โดยใช้ path เดียวกับรูปเต็ม แค่สลับ "Img/" เป็น "Img/THUMB/"
+   ถ้าไม่มีไฟล์ thumbnail อยู่จริง ระบบจะโหลดรูปเต็มแทนอัตโนมัติ (ผ่าน onerror)
+   ดูสคริปต์สร้างไฟล์ thumbnail ได้ที่ make_thumbnails.py ที่แนบมาให้
+------------------------------------ */
+function thumbUrl(imgPath){
+  if(!imgPath) return imgPath;
+  if(/^https?:\/\//i.test(imgPath)) return imgPath; // ลิงก์ภายนอก ไม่ต้องสลับ path
+  return imgPath.replace(/^Img\//, "Img/THUMB/");
+}
+
+/* ---------- แกะรหัสสินค้าเป็น ปี/เดือน/ลำดับ ----------
+   รูปแบบ: M26-8001 -> 26 = ปี(2026), 8 = เดือน, 001 = ลำดับออเดอร์ในเดือนนั้น
+   เดือน 10-12 รองรับแบบ 2 หลัก เช่น M26-10005
+------------------------------------ */
+function parseCode(code){
+  if(!code) return null;
+  const m = /^[A-Za-z]+(\d{2})\d*-(\d{3,5})$/.exec(code.trim());
+  if(!m) return null;
+  const year = parseInt(m[1],10);
+  const rest = m[2];
+  let month, seq;
+  if(rest.length >= 5){
+    month = parseInt(rest.slice(0,2),10);
+    seq = parseInt(rest.slice(2),10);
+  } else {
+    month = parseInt(rest.slice(0,1),10);
+    seq = parseInt(rest.slice(1),10);
+  }
+  if(month < 1 || month > 12) return null;
+  return {year, month, seq, key: year*100000 + month*1000 + seq};
+}
+
+function shirtSvg(cat, code){
+  const [c1,c2] = CAT_COLORS[cat];
+  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g-${code}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="${c1}"/>
+        <stop offset="1" stop-color="${c2}"/>
+      </linearGradient>
+    </defs>
+    <path d="M30 10 L40 4 L50 12 L60 4 L70 10 L82 22 L72 32 L66 27 L66 90 L34 90 L34 27 L28 32 L18 22 Z"
+      fill="url(#g-${code})" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+    <path d="M40 4 Q50 16 60 4" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+  </svg>`;
+}
+
+function stickerSvg(cat, code){
+  const [c1,c2] = CAT_COLORS[cat];
+  return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g-${code}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="${c1}"/>
+        <stop offset="1" stop-color="${c2}"/>
+      </linearGradient>
+    </defs>
+    <path d="M20 20 H80 V65 L65 80 H20 Z" fill="url(#g-${code})" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>
+    <path d="M65 80 V65 H80 Z" fill="rgba(0,0,0,.25)"/>
+    <circle cx="50" cy="48" r="14" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-dasharray="4 3"/>
+  </svg>`;
+}
+
+function handleImgError(imgEl, cat, code){
+  const wrap = imgEl.parentElement;
+  wrap.innerHTML = cat === "sticker" ? stickerSvg(cat, code) : shirtSvg(cat, code);
+}
+
+function productArt(p, code, opts={}){
+  if(p.img){
+    const useThumb = opts.thumb;
+    const src = useThumb ? thumbUrl(p.img) : p.img;
+    const loading = opts.eager ? "eager" : "lazy";
+    const priority = opts.eager ? ' fetchpriority="high"' : ' fetchpriority="low"';
+    // ถ้าโหลด thumbnail ไม่สำเร็จ ให้ลองโหลดรูปเต็มก่อนค่อยตกไปเป็นไอคอน SVG
+    const fallback = useThumb
+      ? `if(!this.dataset.fallback){this.dataset.fallback='1';this.src='${p.img}';}else{handleImgError(this,'${p.cat}','${code}')}`
+      : `handleImgError(this,'${p.cat}','${code}')`;
+    return `<img src="${src}" alt="${p.code}" loading="${loading}"${priority} decoding="async" width="500" height="500" onerror="${fallback}">`;
+  }
+  return p.cat === "sticker" ? stickerSvg(p.cat, code) : shirtSvg(p.cat, code);
+}
+
+function cardMeta(p){
+  if(p.cat === "pants"){
+    return `${t("specLeg")}: ${TERMS.leg[p.leg][lang]}`;
+  }
+  if(p.cat === "fabric" || p.cat === "sticker"){
+    return "";
+  }
+  return `${t("specCollar")}: ${TERMS.collar[p.collar][lang]}<br>${t("specSleeve")}: ${TERMS.sleeve[p.sleeve][lang]}`;
+}
+
+function t(key){ return I18N[lang][key]; }
+function catLabel(cat){ return I18N[lang].cats[cat]; }
+
+function renderNav(){
+  const wrap = document.getElementById("railItems");
+  wrap.innerHTML = NAV_ORDER.map(cat=>
+    `<button class="tag-tab ${cat===activeCat?'active':''}" data-cat="${cat}">${catLabel(cat)}</button>`
+  ).join("");
+  wrap.querySelectorAll(".tag-tab").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      activeCat = btn.dataset.cat;
+      renderNav();
+      renderGrid();
+    });
+  });
+}
+
+function cardHtml(p){
+  return `
+    <article class="card" tabindex="0" data-id="${p.id}">
+      <div class="hole"></div>
+      <div class="card-art" style="background:linear-gradient(160deg,${CAT_COLORS[p.cat][0]}22,${CAT_COLORS[p.cat][1]}22)">
+        ${productArt(p,p.code,{thumb:true})}
+      </div>
+      <span class="code">${p.code}</span>
+      <h3>${NAME_TR[p.id][lang]}</h3>
+      <div class="meta">${cardMeta(p)}</div>
+      <div class="price">${formatPrice(p)}</div>
+      <button class="view-btn">${t("viewDetail")}</button>
+    </article>
+  `;
+}
+
+function sortItems(items){
+  const withDate = [];
+  const withoutDate = [];
+  items.forEach(p=>{
+    const parsed = parseCode(p.code);
+    if(parsed) withDate.push({p, parsed});
+    else withoutDate.push({p, parsed:null});
+  });
+  withDate.sort((a,b)=> sortOrder==="newest" ? b.parsed.key - a.parsed.key : a.parsed.key - b.parsed.key);
+  return withDate.concat(withoutDate);
+}
+
+function renderGrid(){
+  document.getElementById("catTitle").textContent = catLabel(activeCat);
+
+  let items = activeCat === "all" ? PRODUCTS.slice() : PRODUCTS.filter(p=>p.cat===activeCat);
+  if(searchQuery){
+    items = items.filter(p=>p.code.toLowerCase().includes(searchQuery));
+  }
+
+  document.getElementById("catCount").textContent = `${items.length} ${t("itemsCount")}`;
+
+  const sorted = sortItems(items);
+  const grid = document.getElementById("productGrid");
+
+  if(sorted.length === 0){
+    grid.innerHTML = `<div class="no-results">${t("noResults")}</div>`;
+    return;
+  }
+
+  let html = "";
+  let lastKey = null;
+  sorted.forEach(({p, parsed})=>{
+    const groupKey = parsed ? `${parsed.year}-${parsed.month}` : "other";
+    if(groupKey !== lastKey){
+      lastKey = groupKey;
+      const label = parsed
+        ? `${t("monthNames")[parsed.month]} 20${parsed.year}`
+        : t("otherMonth");
+      html += `<div class="month-header">${label}</div>`;
+    }
+    html += cardHtml(p);
+  });
+  grid.innerHTML = html;
+
+  grid.querySelectorAll(".card").forEach(card=>{
+    const open = ()=>openModal(card.dataset.id);
+    card.addEventListener("click",open);
+    card.addEventListener("keypress",e=>{ if(e.key==="Enter") open(); });
+  });
+}
+
+function specRows(p){
+  const rows = [[t("specOrder"), p.code]];
+  if(p.cat === "pants"){
+    rows.push([t("specLeg"), TERMS.leg[p.leg][lang]]);
+  } else if(p.cat === "sticker" || p.cat === "fabric"){
+    // เฉพาะรหัสและราคา (เพิ่มด้านล่าง)
+  } else {
+    rows.push([t("specCollar"), TERMS.collar[p.collar][lang]]);
+    rows.push([t("specSleeve"), TERMS.sleeve[p.sleeve][lang]]);
+    rows.push([t("specShoulder"), TERMS.shoulder[p.shoulder][lang]]);
+  }
+  rows.push([t("specPrice"), formatPrice(p)]);
+  return rows;
+}
+
+function openModal(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  currentProduct = p;
+  document.getElementById("modalArt").style.background = `linear-gradient(160deg,${CAT_COLORS[p.cat][0]}22,${CAT_COLORS[p.cat][1]}22)`;
+  document.getElementById("modalArt").innerHTML = productArt(p,p.code+"-m",{eager:true});
+  document.getElementById("modalCode").textContent = p.code;
+  document.getElementById("modalName").textContent = NAME_TR[p.id][lang];
+  document.getElementById("specBody").innerHTML = specRows(p).map(([k,v])=>
+    `<tr><td class="k">${k}</td><td>${v}</td></tr>`
+  ).join("");
+  const waMsg = encodeURIComponent(`สนใจสั่ง ${NAME_TR[p.id][lang]} (${p.code})`);
+  document.getElementById("modalWa").href = `${CONTACT.whatsapp}?text=${waMsg}`;
+  document.getElementById("modalFb").href = CONTACT.facebook;
+  document.getElementById("modalOverlay").classList.add("open");
+}
+
+function applyStaticText(){
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    el.innerHTML = t(key);
+  });
+  document.getElementById("logoSub").textContent = t("logoSub");
+  document.title = `Alphaprint — ${t("logoSub")}`;
+  document.getElementById("heroWa").href = CONTACT.whatsapp;
+  document.getElementById("floatWa").href = CONTACT.whatsapp;
+  document.getElementById("floatFb").href = CONTACT.facebook;
+  document.getElementById("modalFb").href = CONTACT.facebook;
+  document.getElementById("footerAddressText").textContent = CONTACT.address;
+  document.documentElement.lang = lang === "en" ? "en" : (lang === "la" ? "lo" : "th");
+  document.getElementById("searchInput").placeholder = t("searchPlaceholder");
+  const sortSel = document.getElementById("sortSelect");
+  sortSel.options[0].textContent = t("sortNewest");
+  sortSel.options[1].textContent = t("sortOldest");
+}
+
+function setLang(l){
+  lang = l;
+  document.querySelectorAll(".lang-switch button").forEach(b=>{
+    b.classList.toggle("active", b.dataset.lang===l);
+  });
+  applyStaticText();
+  renderNav();
+  renderGrid();
+}
+
+document.querySelectorAll(".lang-switch button").forEach(b=>{
+  b.addEventListener("click",()=>setLang(b.dataset.lang));
+});
+
+document.getElementById("ctaBrowse").addEventListener("click",()=>{
+  activeCat = "all";
+  renderNav();
+  renderGrid();
+});
+
+/* ---------- ค้นหาด้วยรหัสสินค้า ---------- */
+const searchInput = document.getElementById("searchInput");
+const searchBox = document.getElementById("searchBox");
+const searchClear = document.getElementById("searchClear");
+searchInput.addEventListener("input",()=>{
+  searchQuery = searchInput.value.trim().toLowerCase();
+  searchBox.classList.toggle("has-value", searchQuery.length>0);
+  renderGrid();
+});
+searchClear.addEventListener("click",()=>{
+  searchInput.value = "";
+  searchQuery = "";
+  searchBox.classList.remove("has-value");
+  renderGrid();
+  searchInput.focus();
+});
+
+/* ---------- เรียงลำดับ ---------- */
+document.getElementById("sortSelect").addEventListener("change",e=>{
+  sortOrder = e.target.value;
+  renderGrid();
+});
+
+document.getElementById("modalClose").addEventListener("click",()=>{
+  document.getElementById("modalOverlay").classList.remove("open");
+});
+document.getElementById("modalOverlay").addEventListener("click",e=>{
+  if(e.target.id==="modalOverlay") e.target.classList.remove("open");
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    document.getElementById("modalOverlay").classList.remove("open");
+    document.getElementById("fsOverlay").classList.remove("open");
+  }
+});
+
+/* ---------- fullscreen image viewer ---------- */
+function openFullscreen(){
+  if(!currentProduct) return;
+  const p = currentProduct;
+  document.getElementById("fsArt").innerHTML = productArt(p, p.code+"-fs",{eager:true});
+  document.getElementById("fsCaption").textContent = `${NAME_TR[p.id][lang]} — ${p.code}`;
+  document.getElementById("fsOverlay").classList.add("open");
+}
+document.getElementById("modalArt").addEventListener("click",openFullscreen);
+document.getElementById("fsClose").addEventListener("click",()=>{
+  document.getElementById("fsOverlay").classList.remove("open");
+});
+document.getElementById("fsOverlay").addEventListener("click",e=>{
+  if(e.target.id==="fsOverlay") e.target.classList.remove("open");
+});
+
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click",()=>{
+  const html = document.documentElement;
+  const isDark = html.getAttribute("data-theme")==="dark";
+  html.setAttribute("data-theme", isDark ? "light":"dark");
+  themeToggle.textContent = isDark ? "🌙" : "☀️";
+});
+
+/* init */
+applyStaticText();
+renderNav();
+renderGrid();
+</script>
+</body>
+</html>
