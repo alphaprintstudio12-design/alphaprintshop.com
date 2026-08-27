@@ -170,9 +170,42 @@
 
   /* ===== section ===== */
   .section{max-width:1200px;margin:0 auto;padding:8px 24px 64px;}
-  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:8px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
   .section-head h2{font-size:26px;margin:0;}
   .section-head .count{color:var(--ink-soft);font-size:13px;}
+
+  .toolbar{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    margin-bottom:22px;
+  }
+  .search-box{
+    position:relative;flex:1 1 220px;max-width:320px;
+  }
+  .search-box input{
+    width:100%;padding:9px 34px 9px 14px;border-radius:999px;
+    border:1.5px solid var(--line-strong);background:var(--card);color:var(--ink);
+    font-size:13px;outline:none;
+  }
+  .search-box input:focus{border-color:var(--red-600);}
+  .search-box .clear-btn{
+    position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    width:22px;height:22px;border-radius:50%;border:none;background:transparent;
+    color:var(--ink-soft);font-size:14px;display:none;align-items:center;justify-content:center;
+  }
+  .search-box.has-value .clear-btn{display:flex;}
+  .sort-select{
+    padding:9px 14px;border-radius:999px;border:1.5px solid var(--line-strong);
+    background:var(--card);color:var(--ink);font-size:13px;font-weight:600;
+  }
+  .month-header{
+    grid-column:1/-1;
+    display:flex;align-items:center;gap:10px;
+    margin:6px 0 -4px;
+    font-family:'Anton','Noto Sans Thai','Noto Sans Lao',sans-serif;
+    letter-spacing:.5px;font-size:15px;color:var(--red-600);
+  }
+  .month-header::after{content:"";flex:1;height:2px;background:var(--line);}
+  .no-results{grid-column:1/-1;text-align:center;color:var(--ink-soft);padding:40px 0;font-size:14px;}
 
   .grid{
     display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;
@@ -337,12 +370,11 @@
     <p data-i18n="heroDesc">ເລືອກແບບເສື້ອທີ່ໃຊ່ ເບິ່ງລາຍລະອຽດຄໍເສື້ອ ແຂນເສື້ອ ແລະ ບ່າໄຫຼ່ ແລ້ວທັກຫາພວກເຮົາເພື່ອສັ່ງພິມໄດ້ທັນທີ</p>
     <div class="hero-cta">
       <a class="btn primary" href="#catalog" id="ctaBrowse" data-i18n="ctaBrowse">ເບິ່ງສິນຄ້າທັງໝົດ</a>
-      <a class="btn ghost" id="heroWa" target="_blank">ADDMIN1</a>
-      <a class="btn ghost" id="heroWa2" target="_blank">ADDMIN2</a>
+      <a class="btn ghost" id="heroWa" target="_blank" data-i18n="ctaWaShort">ADDMIN1</a>
     </div>
   </div>
   <div class="hero-swatch"><div class="tag display">
-    <img src="Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg">
+    <img src="Img/THUMB/ORDER/Team Jersey/M26-5004 V2 copy.jpg" alt="" width="280" height="280" loading="eager" fetchpriority="high" decoding="async" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg';}">
   </div></div>
 </section>
 
@@ -350,6 +382,16 @@
   <div class="section-head">
     <h2 id="catTitle">ທັງໝົດ</h2>
     <span class="count" id="catCount"></span>
+  </div>
+  <div class="toolbar">
+    <div class="search-box" id="searchBox">
+      <input type="text" id="searchInput" autocomplete="off">
+      <button class="clear-btn" id="searchClear" aria-label="Clear">✕</button>
+    </div>
+    <select class="sort-select" id="sortSelect">
+      <option value="newest">ใหม่สุด</option>
+      <option value="oldest">เก่าสุด</option>
+    </select>
   </div>
   <div class="grid" id="productGrid"></div>
 </section>
@@ -368,8 +410,7 @@
       <tbody id="specBody"></tbody>
     </table>
     <div class="modal-actions">
-      <a class="btn wa" id="modalWa" target="_blank"><span>ADDMIN1</span></a>
-      <a class="btn wa" id="modalWa2" target="_blank"><span>ADDMIN2</span></a>
+      <a class="btn wa" id="modalWa" target="_blank"><span data-i18n="ctaWaShort">ADDMIN1</span></a>
       <a class="btn fb" id="modalFb" target="_blank"><span data-i18n="ctaFbShort">ທັກຜ່ານ Facebook</span></a>
     </div>
   </div>
@@ -382,11 +423,8 @@
 </div>
 
 <div class="float-contact">
-  <a class="wa" id="floatWa" target="_blank" aria-label="WhatsApp 1">
+  <a class="wa" id="floatWa" target="_blank" aria-label="WhatsApp">
     <img src="Img/Icon/wa1.svg">
-  </a>
-  <a class="wa" id="floatWa2" target="_blank" aria-label="WhatsApp 2">
-    <img src="Img/Icon/wa2.svg">
   </a>
   <a class="fb" id="floatFb" target="_blank" aria-label="Facebook">
     <img src="Img/Icon/fb.svg">
@@ -408,7 +446,6 @@
 /* ---------- CONFIG: แก้ลิงก์ติดต่อจริงตรงนี้ ---------- */
 const CONTACT = {
   whatsapp: "https://wa.me/8562078891672",
-  whatsapp2: "https://wa.me/8562051923510",
   facebook: "https://www.facebook.com/profile.php?id=61589133735977",
   address: "Vientiane, Laos"
 };
@@ -437,8 +474,13 @@ const I18N = {
     itemsCount:"รายการ",
     logoSub:"ร้านออกแบบและผลิตเสื้อพิมพ์ลาย",
     footerAddress:"ที่อยู่ร้าน",
-    ctaWa2Short:"สั่งผ่าน WhatsApp (เบอร์ 2)",
-    cats:{all:"ทั้งหมด",team:"เสื้อทีมงาน",sport:"เสื้อกีฬา",screen:"เสื้อสกรีน",pants:"กางเกง",sticker:"สติกเกอร์",fabric:"เนื้อผ้า"}
+    cats:{all:"ทั้งหมด",team:"เสื้อทีมงาน",sport:"เสื้อกีฬา",screen:"เสื้อสกรีน",pants:"กางเกง",sticker:"สติกเกอร์",fabric:"เนื้อผ้า"},
+    searchPlaceholder:"ค้นหาด้วยรหัสสินค้า...",
+    sortNewest:"ใหม่สุด",
+    sortOldest:"เก่าสุด",
+    otherMonth:"อื่นๆ",
+    noResults:"ไม่พบสินค้าที่ค้นหา",
+    monthNames:["","มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"]
   },
   la:{
     eyebrow:"ອອກແບບ ແລະ ຜະລິດເສື້ອພິມລາຍ",
@@ -462,8 +504,13 @@ const I18N = {
     itemsCount:"ລາຍການ",
     logoSub:"ເສື້ອພິມລາຍ",
     footerAddress:"ທີ່ຢູ່ຮ້ານ",
-    ctaWa2Short:"ສັ່ງຜ່ານ WhatsApp (ເບີ 2)",
-    cats:{all:"ທັງໝົດ",team:"ເສື້ອທີມງານ",sport:"ເສື້ອກິລາ",screen:"ເສື້ອສະກິນ",pants:"ໂສ້ງ",sticker:"ສະຕິກເກີ້",fabric:"ຜ້າ"}
+    cats:{all:"ທັງໝົດ",team:"ເສື້ອທີມງານ",sport:"ເສື້ອກິລາ",screen:"ເສື້ອສະກິນ",pants:"ໂສ້ງ",sticker:"ສະຕິກເກີ້",fabric:"ຜ້າ"},
+    searchPlaceholder:"ຄົ້ນຫາດ້ວຍລະຫັດສິນຄ້າ...",
+    sortNewest:"ໃໝ່ສຸດ",
+    sortOldest:"ເກົ່າສຸດ",
+    otherMonth:"ອື່ນໆ",
+    noResults:"ບໍ່ພົບສິນຄ້າທີ່ຄົ້ນຫາ",
+    monthNames:["","ມັງກອນ","ກຸມພາ","ມີນາ","ເມສາ","ພຶດສະພາ","ມິຖຸນາ","ກໍລະກົດ","ສິງຫາ","ກັນຍາ","ຕຸລາ","ພະຈິກ","ທັນວາ"]
   },
   en:{
     eyebrow:"Custom Shirt Design & Print Studio",
@@ -487,8 +534,13 @@ const I18N = {
     itemsCount:"items",
     logoSub:"Custom Print Shirts",
     footerAddress:"Shop address",
-    ctaWa2Short:"Order via WhatsApp (line 2)",
-    cats:{all:"All",team:"Team Shirts",sport:"Sport Shirts",screen:"Screen Print",pants:"Pants",sticker:"Sticker",fabric:"Fabric"}
+    cats:{all:"All",team:"Team Shirts",sport:"Sport Shirts",screen:"Screen Print",pants:"Pants",sticker:"Sticker",fabric:"Fabric"},
+    searchPlaceholder:"Search by order code...",
+    sortNewest:"Newest first",
+    sortOldest:"Oldest first",
+    otherMonth:"Others",
+    noResults:"No matching products",
+    monthNames:["","January","February","March","April","May","June","July","August","September","October","November","December"]
   }
 };
 
@@ -626,6 +678,14 @@ const NAME_TR = {
    - ใช้ไฟล์ในเครื่อง เช่น "Img/products/AP-T001.jpg" (วางไฟล์ไว้ในโฟลเดอร์ Img/products/)
    - หรือใช้ลิงก์ URL เต็ม เช่น "https://example.com/photo.jpg"
    ถ้าไม่ใส่ img (เว้นว่างไว้ "") หรือโหลดรูปไม่สำเร็จ ระบบจะกลับไปแสดงไอคอนเสื้อ SVG แทนอัตโนมัติ
+
+   *** สำคัญ: รูปพรีวิวในหน้าร้าน (การ์ดสินค้า) จะโหลดจากโฟลเดอร์ Img/THUMB/ ก่อนเสมอ
+   (ขนาดไม่เกิน 1000x1000px เพื่อให้โหลดหน้าเว็บเร็วขึ้น) โดยใช้ path เดียวกับรูปเต็ม
+   เช่นถ้ารูปเต็มคือ "Img/ORDER/Team Jersey/M26-5004 copy.jpg"
+   ให้วางไฟล์รูปย่อไว้ที่ "Img/THUMB/ORDER/Team Jersey/M26-5004 copy.jpg"
+   รูปเต็มจะถูกโหลดก็ต่อเมื่อลูกค้ากดปุ่ม "ดูรายละเอียด" เท่านั้น
+   ใช้สคริปต์ make_thumbnails.py ที่แนบมาเพื่อสร้างไฟล์ในโฟลเดอร์ Img/THUMB/ ให้อัตโนมัติ
+   ถ้ายังไม่มีไฟล์ thumbnail ระบบจะโหลดรูปเต็มแทนอัตโนมัติ (เว็บจะโหลดช้ากว่าเดิม แต่ยังใช้งานได้ปกติ)
 ------------------------------------ */
 /* ---------- ราคาสินค้า ----------
    แก้ตัวเลขราคาให้ตรงกับร้านจริง (หน่วยเป็นกีบ ₭) — สำหรับ ผ้า ราคาจะแสดงเป็น "เริ่มต้น" อัตโนมัติ
@@ -742,6 +802,42 @@ function formatPrice(p){
 let lang = "la";
 let activeCat = "all";
 let currentProduct = null;
+let sortOrder = "newest";
+let searchQuery = "";
+
+/* ---------- thumbnail helper ----------
+   รูปพรีวิวจะโหลดจากโฟลเดอร์ Img/THUMB/ (ขนาดไม่เกิน 1000x1000px)
+   โดยใช้ path เดียวกับรูปเต็ม แค่สลับ "Img/" เป็น "Img/THUMB/"
+   ถ้าไม่มีไฟล์ thumbnail อยู่จริง ระบบจะโหลดรูปเต็มแทนอัตโนมัติ (ผ่าน onerror)
+   ดูสคริปต์สร้างไฟล์ thumbnail ได้ที่ make_thumbnails.py ที่แนบมาให้
+------------------------------------ */
+function thumbUrl(imgPath){
+  if(!imgPath) return imgPath;
+  if(/^https?:\/\//i.test(imgPath)) return imgPath; // ลิงก์ภายนอก ไม่ต้องสลับ path
+  return imgPath.replace(/^Img\//, "Img/THUMB/");
+}
+
+/* ---------- แกะรหัสสินค้าเป็น ปี/เดือน/ลำดับ ----------
+   รูปแบบ: M26-8001 -> 26 = ปี(2026), 8 = เดือน, 001 = ลำดับออเดอร์ในเดือนนั้น
+   เดือน 10-12 รองรับแบบ 2 หลัก เช่น M26-10005
+------------------------------------ */
+function parseCode(code){
+  if(!code) return null;
+  const m = /^[A-Za-z]+(\d{2})\d*-(\d{3,5})$/.exec(code.trim());
+  if(!m) return null;
+  const year = parseInt(m[1],10);
+  const rest = m[2];
+  let month, seq;
+  if(rest.length >= 5){
+    month = parseInt(rest.slice(0,2),10);
+    seq = parseInt(rest.slice(2),10);
+  } else {
+    month = parseInt(rest.slice(0,1),10);
+    seq = parseInt(rest.slice(1),10);
+  }
+  if(month < 1 || month > 12) return null;
+  return {year, month, seq, key: year*100000 + month*1000 + seq};
+}
 
 function shirtSvg(cat, code){
   const [c1,c2] = CAT_COLORS[cat];
@@ -778,9 +874,17 @@ function handleImgError(imgEl, cat, code){
   wrap.innerHTML = cat === "sticker" ? stickerSvg(cat, code) : shirtSvg(cat, code);
 }
 
-function productArt(p, code){
+function productArt(p, code, opts={}){
   if(p.img){
-    return `<img src="${p.img}" alt="${p.code}" loading="lazy" onerror="handleImgError(this,'${p.cat}','${code}')">`;
+    const useThumb = opts.thumb;
+    const src = useThumb ? thumbUrl(p.img) : p.img;
+    const loading = opts.eager ? "eager" : "lazy";
+    const priority = opts.eager ? ' fetchpriority="high"' : ' fetchpriority="low"';
+    // ถ้าโหลด thumbnail ไม่สำเร็จ ให้ลองโหลดรูปเต็มก่อนค่อยตกไปเป็นไอคอน SVG
+    const fallback = useThumb
+      ? `if(!this.dataset.fallback){this.dataset.fallback='1';this.src='${p.img}';}else{handleImgError(this,'${p.cat}','${code}')}`
+      : `handleImgError(this,'${p.cat}','${code}')`;
+    return `<img src="${src}" alt="${p.code}" loading="${loading}"${priority} decoding="async" width="500" height="500" onerror="${fallback}">`;
   }
   return p.cat === "sticker" ? stickerSvg(p.cat, code) : shirtSvg(p.cat, code);
 }
@@ -812,16 +916,12 @@ function renderNav(){
   });
 }
 
-function renderGrid(){
-  document.getElementById("catTitle").textContent = catLabel(activeCat);
-  const items = activeCat === "all" ? PRODUCTS : PRODUCTS.filter(p=>p.cat===activeCat);
-  document.getElementById("catCount").textContent = `${items.length} ${t("itemsCount")}`;
-  const grid = document.getElementById("productGrid");
-  grid.innerHTML = items.map(p=>`
+function cardHtml(p){
+  return `
     <article class="card" tabindex="0" data-id="${p.id}">
       <div class="hole"></div>
       <div class="card-art" style="background:linear-gradient(160deg,${CAT_COLORS[p.cat][0]}22,${CAT_COLORS[p.cat][1]}22)">
-        ${productArt(p,p.code)}
+        ${productArt(p,p.code,{thumb:true})}
       </div>
       <span class="code">${p.code}</span>
       <h3>${NAME_TR[p.id][lang]}</h3>
@@ -829,7 +929,54 @@ function renderGrid(){
       <div class="price">${formatPrice(p)}</div>
       <button class="view-btn">${t("viewDetail")}</button>
     </article>
-  `).join("");
+  `;
+}
+
+function sortItems(items){
+  const withDate = [];
+  const withoutDate = [];
+  items.forEach(p=>{
+    const parsed = parseCode(p.code);
+    if(parsed) withDate.push({p, parsed});
+    else withoutDate.push({p, parsed:null});
+  });
+  withDate.sort((a,b)=> sortOrder==="newest" ? b.parsed.key - a.parsed.key : a.parsed.key - b.parsed.key);
+  return withDate.concat(withoutDate);
+}
+
+function renderGrid(){
+  document.getElementById("catTitle").textContent = catLabel(activeCat);
+
+  let items = activeCat === "all" ? PRODUCTS.slice() : PRODUCTS.filter(p=>p.cat===activeCat);
+  if(searchQuery){
+    items = items.filter(p=>p.code.toLowerCase().includes(searchQuery));
+  }
+
+  document.getElementById("catCount").textContent = `${items.length} ${t("itemsCount")}`;
+
+  const sorted = sortItems(items);
+  const grid = document.getElementById("productGrid");
+
+  if(sorted.length === 0){
+    grid.innerHTML = `<div class="no-results">${t("noResults")}</div>`;
+    return;
+  }
+
+  let html = "";
+  let lastKey = null;
+  sorted.forEach(({p, parsed})=>{
+    const groupKey = parsed ? `${parsed.year}-${parsed.month}` : "other";
+    if(groupKey !== lastKey){
+      lastKey = groupKey;
+      const label = parsed
+        ? `${t("monthNames")[parsed.month]} 20${parsed.year}`
+        : t("otherMonth");
+      html += `<div class="month-header">${label}</div>`;
+    }
+    html += cardHtml(p);
+  });
+  grid.innerHTML = html;
+
   grid.querySelectorAll(".card").forEach(card=>{
     const open = ()=>openModal(card.dataset.id);
     card.addEventListener("click",open);
@@ -856,7 +1003,7 @@ function openModal(id){
   const p = PRODUCTS.find(x=>x.id===id);
   currentProduct = p;
   document.getElementById("modalArt").style.background = `linear-gradient(160deg,${CAT_COLORS[p.cat][0]}22,${CAT_COLORS[p.cat][1]}22)`;
-  document.getElementById("modalArt").innerHTML = productArt(p,p.code+"-m");
+  document.getElementById("modalArt").innerHTML = productArt(p,p.code+"-m",{eager:true});
   document.getElementById("modalCode").textContent = p.code;
   document.getElementById("modalName").textContent = NAME_TR[p.id][lang];
   document.getElementById("specBody").innerHTML = specRows(p).map(([k,v])=>
@@ -864,7 +1011,6 @@ function openModal(id){
   ).join("");
   const waMsg = encodeURIComponent(`สนใจสั่ง ${NAME_TR[p.id][lang]} (${p.code})`);
   document.getElementById("modalWa").href = `${CONTACT.whatsapp}?text=${waMsg}`;
-  document.getElementById("modalWa2").href = `${CONTACT.whatsapp2}?text=${waMsg}`;
   document.getElementById("modalFb").href = CONTACT.facebook;
   document.getElementById("modalOverlay").classList.add("open");
 }
@@ -877,13 +1023,15 @@ function applyStaticText(){
   document.getElementById("logoSub").textContent = t("logoSub");
   document.title = `Alphaprint — ${t("logoSub")}`;
   document.getElementById("heroWa").href = CONTACT.whatsapp;
-  document.getElementById("heroWa2").href = CONTACT.whatsapp2;
   document.getElementById("floatWa").href = CONTACT.whatsapp;
-  document.getElementById("floatWa2").href = CONTACT.whatsapp2;
   document.getElementById("floatFb").href = CONTACT.facebook;
   document.getElementById("modalFb").href = CONTACT.facebook;
   document.getElementById("footerAddressText").textContent = CONTACT.address;
   document.documentElement.lang = lang === "en" ? "en" : (lang === "la" ? "lo" : "th");
+  document.getElementById("searchInput").placeholder = t("searchPlaceholder");
+  const sortSel = document.getElementById("sortSelect");
+  sortSel.options[0].textContent = t("sortNewest");
+  sortSel.options[1].textContent = t("sortOldest");
 }
 
 function setLang(l){
@@ -906,6 +1054,29 @@ document.getElementById("ctaBrowse").addEventListener("click",()=>{
   renderGrid();
 });
 
+/* ---------- ค้นหาด้วยรหัสสินค้า ---------- */
+const searchInput = document.getElementById("searchInput");
+const searchBox = document.getElementById("searchBox");
+const searchClear = document.getElementById("searchClear");
+searchInput.addEventListener("input",()=>{
+  searchQuery = searchInput.value.trim().toLowerCase();
+  searchBox.classList.toggle("has-value", searchQuery.length>0);
+  renderGrid();
+});
+searchClear.addEventListener("click",()=>{
+  searchInput.value = "";
+  searchQuery = "";
+  searchBox.classList.remove("has-value");
+  renderGrid();
+  searchInput.focus();
+});
+
+/* ---------- เรียงลำดับ ---------- */
+document.getElementById("sortSelect").addEventListener("change",e=>{
+  sortOrder = e.target.value;
+  renderGrid();
+});
+
 document.getElementById("modalClose").addEventListener("click",()=>{
   document.getElementById("modalOverlay").classList.remove("open");
 });
@@ -923,7 +1094,7 @@ document.addEventListener("keydown",e=>{
 function openFullscreen(){
   if(!currentProduct) return;
   const p = currentProduct;
-  document.getElementById("fsArt").innerHTML = productArt(p, p.code+"-fs");
+  document.getElementById("fsArt").innerHTML = productArt(p, p.code+"-fs",{eager:true});
   document.getElementById("fsCaption").textContent = `${NAME_TR[p.id][lang]} — ${p.code}`;
   document.getElementById("fsOverlay").classList.add("open");
 }
