@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alphaprint — ระบบจัดการสินค้า (Admin)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red-900:#5c0d16; --red-700:#8a1220; --red-600:#c81e2c; --red-500:#e02a38;
+    --gold:#d9a441; --gold-dim:#a97e34;
+    --bg:#f5ece2; --bg-soft:#efe1d2; --card:#fbf4ea;
+    --ink:#241a15; --ink-soft:#5a4a3f; --line:#d8c4ad; --shadow:rgba(36,26,21,0.18);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Noto Sans Thai","Inter",sans-serif;
+    padding:24px;
+  }
+  h1{font-size:22px;margin:0 0 4px;}
+  .sub{color:var(--ink-soft);font-size:13.5px;margin-bottom:20px;}
+  .warn{
+    background:#fff3cd;border:1px solid #e0c25a;color:#5a4a1a;
+    padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:20px;line-height:1.6;
+  }
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px;margin-bottom:18px;box-shadow:0 4px 14px var(--shadow);
+  }
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  input[type=file]{font-size:13px;}
+  button, .btn{
+    font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer;
+    border:none;border-radius:8px;padding:10px 16px;
+  }
+  .btn-primary{background:var(--red-600);color:#fff;}
+  .btn-primary:hover{background:var(--red-700);}
+  .btn-gold{background:var(--gold);color:#241a15;}
+  .btn-gold:hover{background:var(--gold-dim);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink);}
+  .btn-danger{background:#b3261e;color:#fff;}
+  .btn-sm{padding:6px 10px;font-size:12px;border-radius:6px;}
+  select, input[type=text], input[type=number]{
+    font-family:inherit;font-size:13.5px;padding:8px 10px;
+    border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);
+    width:100%;
+  }
+  label{font-size:12.5px;color:var(--ink-soft);font-weight:600;display:block;margin-bottom:4px;}
+  .field{margin-bottom:12px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  #catTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .catTab{
+    padding:7px 14px;border-radius:999px;border:1px solid var(--line);
+    background:#fff;font-size:12.5px;font-weight:700;cursor:pointer;
+  }
+  .catTab.active{background:var(--red-600);color:#fff;border-color:var(--red-600);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);}
+  th{color:var(--ink-soft);font-size:12px;text-transform:uppercase;letter-spacing:.03em;}
+  td img{width:42px;height:42px;object-fit:cover;border-radius:6px;vertical-align:middle;}
+  .thumb-empty{
+    width:42px;height:42px;border-radius:6px;background:var(--bg-soft);
+    display:inline-flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .actions{display:flex;gap:6px;}
+  #formPanel{display:none;}
+  #formPanel.open{display:block;}
+  .overlay{
+    position:fixed;inset:0;background:rgba(20,14,10,.55);
+    display:none;align-items:flex-start;justify-content:center;
+    padding:30px 14px;overflow:auto;z-index:50;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--card);border-radius:14px;padding:22px;max-width:560px;width:100%;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+  }
+  .modal h2{margin-top:0;font-size:17px;}
+  .catField{display:none;}
+  .catField.show{display:block;}
+  #emptyState{color:var(--ink-soft);font-size:14px;padding:30px 0;text-align:center;}
+  #stepUpload{}
+  #mainApp{display:none;}
+  #mainApp.open{display:block;}
+  small.hint{color:var(--ink-soft);font-size:11.5px;}
+</style>
+</head>
+<body>
+
+<h1>🗂️ ระบบจัดการสินค้า Alphaprint</h1>
+<div class="sub">เพิ่ม / แก้ไข / ลบสินค้า แล้วดาวน์โหลดไฟล์ index.html ใหม่ไปอัปโหลดทับของเดิม</div>
+
+<div class="warn">
+  ⚠️ หน้านี้ทำงานอยู่ในเบราว์เซอร์ของคุณทั้งหมด ไม่มีการส่งข้อมูลขึ้นเซิร์ฟเวอร์ที่ไหน และไม่มีระบบล็อกอินจริง —
+  <b>เก็บไฟล์ admin.html นี้ไว้ในเครื่องของคุณเอง อย่าอัปโหลดขึ้นเว็บที่คนอื่นเข้าถึงได้</b> เวลาจะแก้ไขสินค้า
+  ให้เปิดไฟล์นี้ในเครื่อง แก้เสร็จแล้วค่อยเอาไฟล์ index.html ใหม่ที่ได้ไปอัปโหลดทับของเดิมบน hosting
+</div>
+
+<div class="card" id="stepUpload">
+  <label>ขั้นตอนที่ 1: อัปโหลดไฟล์ <b>index.html</b> ปัจจุบันของร้าน (ไฟล์เดียวกับที่อัปโหลดขึ้น hosting)</label>
+  <div class="row">
+    <input type="file" id="fileInput" accept=".html">
+    <span id="fileStatus" style="font-size:12.5px;color:var(--ink-soft);"></span>
+  </div>
+</div>
+
+<div id="mainApp">
+
+  <div class="card">
+    <div class="row" style="justify-content:space-between;">
+      <div id="catTabs"></div>
+      <div class="row">
+        <button class="btn-gold" id="btnAdd">+ เพิ่มสินค้าใหม่</button>
+        <button class="btn-primary" id="btnExport">⬇ ดาวน์โหลด index.html ใหม่</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>รูป</th><th>รหัส</th><th>ชื่อ (ไทย)</th><th>หมวดหมู่</th><th>ราคา</th><th></th></tr>
+      </thead>
+      <tbody id="productBody"></tbody>
+    </table>
+    <div id="emptyState" style="display:none;">ยังไม่มีสินค้าในหมวดนี้</div>
+  </div>
+
+</div>
+
+<!-- ฟอร์มเพิ่ม/แก้ไขสินค้า -->
+<div class="overlay" id="formOverlay">
+  <div class="modal">
+    <h2 id="formTitle">เพิ่มสินค้าใหม่</h2>
+
+    <div class="field">
+      <label>หมวดหมู่</label>
+      <select id="f_cat">
+        <option value="team">เสื้อทีมงาน</option>
+        <option value="sport">เสื้อกีฬา</option>
+        <option value="screen">เสื้อสกรีน</option>
+        <option value="pants">กางเกง</option>
+        <option value="sticker">สติกเกอร์</option>
+        <option value="fabric">ผ้า</option>
+      </select>
+    </div>
+
+    <div class="grid2">
+      <div class="field">
+        <label>รหัสสินค้า (code)</label>
+        <input type="text" id="f_code" placeholder="เช่น AP-T005">
+      </div>
+      <div class="field">
+        <label>ราคา (₭)</label>
+        <input type="number" id="f_price" placeholder="เช่น 65000">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>ชื่อสินค้า (ภาษาไทย)</label>
+      <input type="text" id="f_name_th" placeholder="เช่น เสื้อโปโลทีมงาน">
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>ชื่อสินค้า (ภาษาลาว)</label>
+        <input type="text" id="f_name_la" placeholder="ຊື່ເປັນພາສາລາວ">
+      </div>
+      <div class="field">
+        <label>ชื่อสินค้า (ภาษาอังกฤษ)</label>
+        <input type="text" id="f_name_en" placeholder="English name">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>ลิงก์รูปภาพสินค้า (ไม่บังคับ)</label>
+      <input type="text" id="f_img" placeholder="Img/products/AP-T005.jpg หรือ https://...">
+      <small class="hint">วางไฟล์รูปไว้ในโฟลเดอร์เดียวกับ index.html แล้วใส่ path ที่นี่ หรือใช้ลิงก์ URL เต็มก็ได้ ถ้าเว้นว่างไว้จะใช้ไอคอนแทน</small>
+    </div>
+
+    <!-- เสื้อ: team / sport / screen -->
+    <div class="catField" data-catgroup="shirt">
+      <div class="grid3">
+        <div class="field">
+          <label>คอเสื้อ</label>
+          <select id="f_collar">
+            <option value="round">คอกลม</option>
+            <option value="polo">คอโปโล</option>
+            <option value="vneck">คอวี</option>
+            <option value="vpok">คอวีปก</option>
+            <option value="pokvtud">คอปกวีตัด </option>
+            <option value="vkwai">คอวีไข่ว</option>
+            <option value="fivelieam">คอ5เหลี่ยม</option>
+            <option value="vtud">คอวีตัด</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>แขนเสื้อ</label>
+          <select id="f_sleeve">
+            <option value="short">แขนสั้น</option>
+            <option value="long">แขนยาว</option>
+            <option value="sleeveless">แขนกุด</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>บ่าไหล่</label>
+          <select id="f_shoulder">
+            <option value="normal">ไหล่ปกติ</option>
+            <option value="raglan">ไหล่แร็กแลน</option>
+            <option value="slope">ไหล่สโลป</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- กางเกง -->
+    <div class="catField" data-catgroup="pants">
+      <div class="field">
+        <label>ประเภทขา</label>
+        <select id="f_leg">
+          <option value="short">ขาสั้น</option>
+          <option value="long">ขายาว</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" style="justify-content:flex-end;margin-top:8px;">
+      <button class="btn-ghost" id="btnCancel">ยกเลิก</button>
+      <button class="btn-primary" id="btnSave">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CAT_LABEL = {all:"ทั้งหมด",team:"เสื้อทีมงาน",sport:"เสื้อกีฬา",screen:"เสื้อสกรีน",pants:"กางเกง",sticker:"สติกเกอร์",fabric:"ผ้า"};
+const CAT_ORDER = ["team","sport","screen","pants","sticker","fabric"];
+const PREFIX = {team:"t",sport:"s",screen:"p",pants:"g",fabric:"f",sticker:"st"};
+const COLLAR_LABEL = {round:"คอกลม",polo:"คอโปโล",vneck:"คอวี"};
+const SLEEVE_LABEL = {short:"แขนสั้น",long:"แขนยาว",sleeveless:"แขนกุด"};
+const SHOULDER_LABEL = {normal:"ไหล่ปกติ",raglan:"ไหล่แร็กแลน",drop:"ไหล่ตก"};
+const LEG_LABEL = {short:"ขาสั้น",long:"ขายาว"};
+
+let originalHtml = "";
+let products = [];   // [{id,cat,code,collar,sleeve,shoulder,leg,price,img}]
+let names = {};      // {id:{th,la,en}}
+let activeCat = "all";
+let editingId = null;
+
+const $ = (id)=>document.getElementById(id);
+
+// ---------- ขั้นตอนที่ 1: อัปโหลดและแกะข้อมูลจากไฟล์ ----------
+$("fileInput").addEventListener("change", (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try{
+      originalHtml = ev.target.result;
+      parseHtml(originalHtml);
+      $("fileStatus").textContent = `✅ โหลดไฟล์ "${file.name}" สำเร็จ พบสินค้า ${products.length} รายการ`;
+      $("mainApp").classList.add("open");
+      renderTabs();
+      renderTable();
+    }catch(err){
+      $("fileStatus").textContent = "❌ อ่านไฟล์ไม่สำเร็จ: ตรวจสอบว่าเป็นไฟล์ index.html ของร้านที่ถูกต้อง (" + err.message + ")";
+      $("mainApp").classList.remove("open");
+    }
+  };
+  reader.readAsText(file, "UTF-8");
+});
+
+function extractBetween(html, key){
+  const re = new RegExp("/\\* @ADMIN:"+key+":START \\*/([\\s\\S]*?)/\\* @ADMIN:"+key+":END \\*/");
+  const m = html.match(re);
+  if(!m) throw new Error(`ไม่พบส่วน ${key} ในไฟล์ (อาจไม่ใช่ index.html รุ่นที่รองรับ)`);
+  return m[1];
+}
+
+function parseHtml(html){
+  const productsCode = extractBetween(html, "PRODUCTS");
+  const namesCode = extractBetween(html, "NAME_TR");
+  products = new Function(productsCode + "\nreturn PRODUCTS;")();
+  names = new Function(namesCode + "\nreturn NAME_TR;")();
+  activeCat = "all";
+  editingId = null;
+}
+
+// ---------- แท็บหมวดหมู่ ----------
+function renderTabs(){
+  const tabs = ["all", ...CAT_ORDER];
+  $("catTabs").innerHTML = tabs.map(c=>
+    `<button class="catTab ${c===activeCat?'active':''}" data-cat="${c}">${CAT_LABEL[c]}</button>`
+  ).join("");
+  $("catTabs").querySelectorAll(".catTab").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      activeCat = btn.dataset.cat;
+      renderTabs();
+      renderTable();
+    });
+  });
+}
+
+// ---------- ตารางสินค้า ----------
+function renderTable(){
+  const list = activeCat === "all" ? products : products.filter(p=>p.cat===activeCat);
+  $("productBody").innerHTML = list.map(p=>{
+    const nm = names[p.id] ? names[p.id].th : "(ไม่มีชื่อ)";
+    const thumb = p.img
+      ? `<img src="${p.img}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'thumb-empty',textContent:'🖼️'}))">`
+      : `<span class="thumb-empty">🖼️</span>`;
+    return `
+      <tr>
+        <td>${thumb}</td>
+        <td>${p.code}</td>
+        <td>${nm}</td>
+        <td>${CAT_LABEL[p.cat]}</td>
+        <td>${Number(p.price||0).toLocaleString("en-US")} ₭</td>
+        <td class="actions">
+          <button class="btn-ghost btn-sm" data-edit="${p.id}">แก้ไข</button>
+          <button class="btn-danger btn-sm" data-del="${p.id}">ลบ</button>
+        </td>
+      </tr>`;
+  }).join("");
+  $("emptyState").style.display = list.length ? "none" : "block";
+
+  $("productBody").querySelectorAll("[data-edit]").forEach(b=>
+    b.addEventListener("click", ()=>openForm(b.dataset.edit))
+  );
+  $("productBody").querySelectorAll("[data-del]").forEach(b=>
+    b.addEventListener("click", ()=>{
+      const p = products.find(x=>x.id===b.dataset.del);
+      if(confirm(`ลบสินค้า "${p.code}" ใช่หรือไม่?`)){
+        products = products.filter(x=>x.id!==b.dataset.del);
+        delete names[b.dataset.del];
+        renderTable();
+      }
+    })
+  );
+}
+
+// ---------- ฟอร์มเพิ่ม/แก้ไข ----------
+function catGroup(cat){
+  if(cat==="pants") return "pants";
+  if(cat==="team"||cat==="sport"||cat==="screen") return "shirt";
+  return "none";
+}
+
+function updateFormFields(){
+  const cat = $("f_cat").value;
+  const group = catGroup(cat);
+  document.querySelectorAll(".catField").forEach(el=>{
+    el.classList.toggle("show", el.dataset.catgroup === group);
+  });
+}
+$("f_cat").addEventListener("change", updateFormFields);
+
+function nextId(cat){
+  const prefix = PREFIX[cat];
+  let max = 0;
+  products.filter(p=>p.cat===cat).forEach(p=>{
+    const n = parseInt(p.id.replace(prefix,""),10);
+    if(!isNaN(n) && n>max) max = n;
+  });
+  return prefix + (max+1);
+}
+
+function openForm(id){
+  editingId = id || null;
+  const p = id ? products.find(x=>x.id===id) : null;
+  $("formTitle").textContent = id ? `แก้ไขสินค้า: ${p.code}` : "เพิ่มสินค้าใหม่";
+
+  $("f_cat").value = p ? p.cat : "team";
+  $("f_code").value = p ? p.code : "";
+  $("f_price").value = p ? p.price : "";
+  $("f_img").value = p ? (p.img||"") : "";
+  const nm = p && names[p.id] ? names[p.id] : {th:"",la:"",en:""};
+  $("f_name_th").value = nm.th || "";
+  $("f_name_la").value = nm.la || "";
+  $("f_name_en").value = nm.en || "";
+  $("f_collar").value = p && p.collar ? p.collar : "round";
+  $("f_sleeve").value = p && p.sleeve ? p.sleeve : "short";
+  $("f_shoulder").value = p && p.shoulder ? p.shoulder : "normal";
+  $("f_leg").value = p && p.leg ? p.leg : "short";
+
+  updateFormFields();
+  $("formOverlay").classList.add("open");
+}
+
+$("btnAdd").addEventListener("click", ()=>openForm(null));
+$("btnCancel").addEventListener("click", ()=> $("formOverlay").classList.remove("open"));
+
+$("btnSave").addEventListener("click", ()=>{
+  const cat = $("f_cat").value;
+  const code = $("f_code").value.trim();
+  const price = Number($("f_price").value || 0);
+  const img = $("f_img").value.trim();
+  const nameTh = $("f_name_th").value.trim();
+  const nameLa = $("f_name_la").value.trim();
+  const nameEn = $("f_name_en").value.trim();
+
+  if(!code){ alert("กรุณาใส่รหัสสินค้า"); return; }
+  if(!nameTh){ alert("กรุณาใส่ชื่อสินค้าอย่างน้อยภาษาไทย"); return; }
+
+  const id = editingId || nextId(cat);
+  const group = catGroup(cat);
+
+  const record = {id, cat, code, price, img};
+  if(group === "shirt"){
+    record.collar = $("f_collar").value;
+    record.sleeve = $("f_sleeve").value;
+    record.shoulder = $("f_shoulder").value;
+  } else if(group === "pants"){
+    record.leg = $("f_leg").value;
+  }
+
+  if(editingId){
+    const idx = products.findIndex(x=>x.id===editingId);
+    products[idx] = record;
+  } else {
+    products.push(record);
+  }
+  names[id] = {th:nameTh, la: nameLa || nameTh, en: nameEn || nameTh};
+
+  $("formOverlay").classList.remove("open");
+  renderTable();
+});
+
+// ---------- ส่งออกไฟล์ index.html ใหม่ ----------
+function serializeProduct(p){
+  let s = `  {id:"${p.id}",cat:"${p.cat}",code:"${p.code}"`;
+  if(p.cat==="team"||p.cat==="sport"||p.cat==="screen"){
+    s += `,collar:"${p.collar}",sleeve:"${p.sleeve}",shoulder:"${p.shoulder}"`;
+  } else if(p.cat==="pants"){
+    s += `,leg:"${p.leg}"`;
+  }
+  s += `,price:${Number(p.price||0)},img:${JSON.stringify(p.img||"")}}`;
+  return s;
+}
+
+function serializeNames(){
+  return products.map(p=>{
+    const n = names[p.id] || {th:"",la:"",en:""};
+    return `  ${p.id}:{th:${JSON.stringify(n.th)},la:${JSON.stringify(n.la)},en:${JSON.stringify(n.en)}}`;
+  }).join(",\n");
+}
+
+$("btnExport").addEventListener("click", ()=>{
+  if(!originalHtml){ alert("กรุณาอัปโหลดไฟล์ index.html ก่อน"); return; }
+
+  const sortedProducts = [...products].sort((a,b)=>{
+    const ai = CAT_ORDER.indexOf(a.cat), bi = CAT_ORDER.indexOf(b.cat);
+    return ai - bi;
+  });
+  products = sortedProducts;
+
+  const productsBlock =
+`/* @ADMIN:PRODUCTS:START */
+const PRODUCTS = [
+${products.map(serializeProduct).join(",\n")}
+];
+/* @ADMIN:PRODUCTS:END */`;
+
+  const namesBlock =
+`/* @ADMIN:NAME_TR:START */
+const NAME_TR = {
+${serializeNames()}
+};
+/* @ADMIN:NAME_TR:END */`;
+
+  let newHtml = originalHtml;
+  newHtml = newHtml.replace(/\/\* @ADMIN:PRODUCTS:START \*\/[\s\S]*?\/\* @ADMIN:PRODUCTS:END \*\//, productsBlock);
+  newHtml = newHtml.replace(/\/\* @ADMIN:NAME_TR:START \*\/[\s\S]*?\/\* @ADMIN:NAME_TR:END \*\//, namesBlock);
+
+  const blob = new Blob([newHtml], {type:"text/html;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "index.html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+
+  renderTabs();
+  renderTable();
+});
+</script>
+</body>
+</html>
