@@ -40,8 +40,12 @@
   }
   *{box-sizing:border-box;}
   body{margin:0;}
-  body,button,input{
-    font-family:'Inter','Noto Sans Thai','Noto Sans Lao',sans-serif;
+  html{--font-main:'Inter','Noto Sans Thai','Noto Sans Lao',sans-serif;}
+  html[lang="th"]{--font-main:'Noto Sans Thai','Inter','Noto Sans Lao',sans-serif;}
+  html[lang="lo"]{--font-main:'Noto Sans Lao','Inter','Noto Sans Thai',sans-serif;}
+  html[lang="en"]{--font-main:'Inter','Noto Sans Thai','Noto Sans Lao',sans-serif;}
+  body,button,input,select,option,textarea{
+    font-family:var(--font-main);
   }
   html,body{
     background:var(--bg);
@@ -307,6 +311,68 @@
   .btn.wa{background:#25D366;border-color:#25D366;color:#08331d;}
   .btn.fb{background:#1877F2;border-color:#1877F2;color:#fff;}
 
+  /* ===== design order ===== */
+  .btn.gold{background:var(--gold);border-color:var(--gold-dim);color:#3a2a10;box-shadow:0 6px 14px rgba(169,126,52,.35);}
+  .btn.gold:hover{filter:brightness(1.06);}
+  .tag-tab.design-tab{
+    background:var(--gold);border:1.5px solid var(--gold-dim);border-bottom:none;color:#3a2a10;
+  }
+  .tag-tab.design-tab::before{background:var(--red-600);border-color:var(--red-900);}
+  .design-modal{max-width:680px;}
+  .design-title{margin:0 40px 6px 0;font-size:24px;}
+  .design-intro{margin:0 0 18px;color:var(--ink-soft);font-size:14px;line-height:1.6;}
+  .field{margin-bottom:18px;}
+  .field-label{font-weight:800;font-size:14px;margin-bottom:6px;}
+  .field-hint{font-size:12.5px;color:var(--ink-soft);margin-bottom:10px;}
+  .field input[type=text], .field textarea, .dp-search{
+    width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line-strong);
+    background:var(--card);color:var(--ink);font-size:14px;outline:none;
+  }
+  .field textarea{min-height:96px;resize:vertical;line-height:1.5;}
+  .field input[type=text]:focus, .field textarea:focus, .dp-search:focus{border-color:var(--red-600);}
+  .field-row{margin-bottom:10px;}
+  .field-sub{font-size:12.5px;color:var(--ink-soft);font-weight:600;margin-bottom:4px;}
+  .seg{display:flex;gap:8px;margin-top:8px;}
+  .seg label{flex:1;position:relative;cursor:pointer;}
+  .seg input{position:absolute;opacity:0;pointer-events:none;}
+  .seg span{
+    display:block;text-align:center;padding:8px;border:1.5px solid var(--line-strong);
+    border-radius:8px;font-size:13px;font-weight:700;color:var(--ink-soft);
+  }
+  .seg input:checked + span{background:var(--red-600);border-color:var(--red-600);color:#fff;}
+  .seg input:focus-visible + span{outline:3px solid var(--red-600);outline-offset:2px;}
+  .dp-selected{
+    display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;
+    border:1.5px dashed var(--line-strong);background:var(--bg-soft);margin-bottom:10px;min-height:68px;
+    font-size:13.5px;
+  }
+  .dp-selected img{width:48px;height:48px;object-fit:contain;border-radius:6px;background:var(--card);flex:0 0 48px;}
+  .dp-selected .none{color:var(--ink-soft);}
+  .dp-selected strong{display:block;font-size:14px;}
+  .dp-selected small{color:var(--ink-soft);}
+  .dp-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+  .dp-chip{
+    border:1.5px solid var(--line-strong);background:transparent;color:var(--ink-soft);
+    border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700;
+  }
+  .dp-chip.active{background:var(--red-600);border-color:var(--red-600);color:#fff;}
+  .dp-search{margin-bottom:8px;padding:8px 14px;font-size:13px;border-radius:999px;}
+  .dp-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;
+    max-height:270px;overflow-y:auto;padding:4px;
+    border:1.5px solid var(--line);border-radius:10px;background:var(--bg);
+  }
+  .dp-item{
+    border:2px solid var(--line);border-radius:10px;background:var(--card);padding:4px;
+    text-align:center;font-size:10px;font-weight:700;color:var(--ink-soft);
+  }
+  .dp-item img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:6px;}
+  .dp-item span{display:block;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .dp-item.sel{border-color:var(--red-600);box-shadow:0 0 0 2px var(--red-600);}
+  .dp-empty{grid-column:1/-1;text-align:center;color:var(--ink-soft);padding:24px 0;font-size:13px;}
+  .field-error{display:none;margin-top:8px;color:var(--red-600);font-size:13px;font-weight:700;}
+  .field-error.show{display:block;}
+
   /* ===== floating contact ===== */
   .float-contact{
     position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:60;
@@ -417,12 +483,13 @@
     <h1 data-i18n="heroTitle">ອອກແບບ<span>ຜະລິດ</span> ຄົບຈົບໃນບ່ອນດຽວ</h1>
     <p data-i18n="heroDesc">ເລືອກແບບເສື້ອທີ່ໃຊ່ ເບິ່ງລາຍລະອຽດຄໍເສື້ອ ແຂນເສື້ອ ແລະ ບ່າໄຫຼ່ ແລ້ວທັກຫາພວກເຮົາເພື່ອສັ່ງພິມໄດ້ທັນທີ</p>
     <div class="hero-cta">
+      <button type="button" class="btn gold" id="ctaDesign"><span data-i18n="designBtn">ສັ່ງອອກແບບ</span></button>
       <a class="btn primary" href="#catalog" id="ctaBrowse" data-i18n="ctaBrowse">ເບິ່ງສິນຄ້າທັງໝົດ</a>
       <a class="btn ghost" id="heroWa" target="_blank" data-i18n="ctaWaShort">ADDMIN1</a>
     </div>
   </div>
   <div class="hero-swatch"><div class="tag display">
-    <img src="Img/THUMB/ORDER/Team Jersey/M26-5004 V2 copy.jpg" alt="" width="280" height="280" loading="eager" fetchpriority="high" decoding="async" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg';}">
+    <img src="Img/THUMB/ORDER/Team Jersey/M26-9012 copy.jpg" alt="" width="280" height="280" loading="eager" fetchpriority="high" decoding="async" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='Img/ORDER/Team Jersey/2610-10013 copy.jpg';}">
   </div></div>
 </section>
 
@@ -460,6 +527,59 @@
     <div class="modal-actions">
       <a class="btn wa" id="modalWa" target="_blank"><span data-i18n="ctaWaShort">ADDMIN1</span></a>
       <a class="btn fb" id="modalFb" target="_blank"><span data-i18n="ctaFbShort">ທັກຜ່ານ Facebook</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="designOverlay">
+  <div class="modal design-modal" role="dialog" aria-modal="true" aria-labelledby="designTitle">
+    <button class="modal-close" id="designClose" aria-label="Close">✕</button>
+    <h2 class="design-title" id="designTitle" data-i18n="designTitle">ສັ່ງອອກແບບ</h2>
+    <p class="design-intro" data-i18n="designIntro"></p>
+
+    <div class="field">
+      <div class="field-label" data-i18n="designModel"></div>
+      <div class="field-hint" data-i18n="designModelHint"></div>
+      <div class="dp-selected" id="dpSelected"></div>
+      <div class="dp-chips" id="dpChips"></div>
+      <input class="dp-search" id="dpSearch" type="text" autocomplete="off">
+      <div class="dp-grid" id="dpGrid"></div>
+      <div class="field-error" id="dpError" data-i18n="designNeedModel"></div>
+    </div>
+
+    <div id="designShirtFields">
+      <div class="field">
+        <div class="field-label" data-i18n="designFront"></div>
+        <input type="text" id="dFront" autocomplete="off">
+      </div>
+      <div class="field">
+        <div class="field-label" data-i18n="designBack"></div>
+        <div class="field-row">
+          <div class="field-sub" data-i18n="designBackUpper"></div>
+          <input type="text" id="dBack" autocomplete="off">
+        </div>
+        <div class="field-row">
+          <div class="field-sub" data-i18n="designBackLower"></div>
+          <input type="text" id="dBackLower" autocomplete="off">
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label" data-i18n="designSleeve"></div>
+        <input type="text" id="dSleeve" autocomplete="off">
+        <div class="seg" role="radiogroup">
+          <label><input type="radio" name="dSleeveDir" value="v" checked><span data-i18n="designVertical"></span></label>
+          <label><input type="radio" name="dSleeveDir" value="h"><span data-i18n="designHorizontal"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label" data-i18n="designExtra"></div>
+      <textarea id="dExtra"></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn wa" id="designSend"><span data-i18n="designSend"></span></button>
     </div>
   </div>
 </div>
@@ -506,8 +626,25 @@ const I18N = {
     heroDesc:"เลือกแบบเสื้อที่ใช่ ดูรายละเอียดคอเสื้อ แขนเสื้อ และทรงบ่า แล้วทักหาเราเพื่อสั่งออกแบบทันที",
     ctaBrowse:"ดูสินค้าทั้งหมด",
     ctaWa:"ทัก WhatsApp",
-    ctaWaShort:"สั่งผ่าน WhatsApp",
+    ctaWaShort:"ทักผ่าน WhatsApp",
     ctaFbShort:"ทักผ่าน Facebook",
+    designBtn:"สั่งออกแบบ",
+    designTitle:"สั่งออกแบบ",
+    designIntro:"กรอกรายละเอียดด้านล่าง แล้วกดส่งไปที่ WhatsApp ของแอดมิน",
+    designModel:"เลือกแบบต้นแบบ",
+    designModelHint:"เลือกจากสินค้าที่เรามี (เสื้อหรือสติกเกอร์)",
+    designNone:"ยังไม่ได้เลือกแบบ",
+    designNeedModel:"กรุณาเลือกแบบต้นแบบก่อน",
+    designFront:"ชื่อด้านหน้า",
+    designBack:"ชื่อด้านหลัง",
+    designBackUpper:"ชื่อด้านหลัง (บน)",
+    designBackLower:"ชื่อด้านหลัง (ข้างล่าง)",
+    designSleeve:"ชื่อบนแขน",
+    designVertical:"แนวตั้ง",
+    designHorizontal:"แนวนอน",
+    designExtra:"รายละเอียดเพิ่มเติม",
+    designExtraPh:"อยากแก้ไขหรือเพิ่มอะไรนอกเหนือจากข้างต้น...",
+    designSend:"ส่งไปที่ WhatsApp",
     viewDetail:"ดูรายละเอียด",
     specOrder:"รหัสออเดอร์",
     specCollar:"คอเสื้อ",
@@ -536,8 +673,25 @@ const I18N = {
     heroDesc:"ເລືອກແບບເສື້ອທີ່ໃຊ່ ເບິ່ງລາຍລະອຽດຄໍເສື້ອ ແຂນເສື້ອ ແລະ ບ່າໄຫຼ່ ແລ້ວທັກຫາພວກເຮົາເພື່ອສັ່ງອອກແບບທັນທີ",
     ctaBrowse:"ເບິ່ງສິນຄ້າທັງໝົດ",
     ctaWa:"ທັກ WhatsApp",
-    ctaWaShort:"ສັ່ງຜ່ານ WhatsApp",
+    ctaWaShort:"ທັກຜ່ານ WhatsApp",
     ctaFbShort:"ທັກຜ່ານ Facebook",
+    designBtn:"ສັ່ງອອກແບບ",
+    designTitle:"ສັ່ງອອກແບບ",
+    designIntro:"ຕື່ມລາຍລະອຽດລຸ່ມນີ້ ແລ້ວກົດສົ່ງໄປທີ່ WhatsApp ຂອງແອດມິນ",
+    designModel:"ເລືອກແບບຕົ້ນແບບ",
+    designModelHint:"ເລືອກຈາກສິນຄ້າທີ່ພວກເຮົາມີ (ເສື້ອ ຫຼື ສະຕິກເກີ້)",
+    designNone:"ຍັງບໍ່ໄດ້ເລືອກແບບ",
+    designNeedModel:"ກະລຸນາເລືອກແບບຕົ້ນແບບກ່ອນ",
+    designFront:"ຊື່ດ້ານໜ້າ",
+    designBack:"ຊື່ດ້ານຫຼັງ",
+    designBackUpper:"ຊື່ດ້ານຫຼັງ (ເທິງ)",
+    designBackLower:"ຊື່ດ້ານຫຼັງ (ດ້ານລຸ່ມ)",
+    designSleeve:"ຊື່ເທິງແຂນ",
+    designVertical:"ແນວຕັ້ງ",
+    designHorizontal:"ແນວນອນ",
+    designExtra:"ລາຍລະອຽດເພີ່ມເຕີມ",
+    designExtraPh:"ຢາກແກ້ໄຂ ຫຼື ເພີ່ມຫຍັງນອກເໜືອຈາກຂ້າງເທິງ...",
+    designSend:"ສົ່ງໄປທີ່ WhatsApp",
     viewDetail:"ເບິ່ງລາຍລະອຽດ",
     specOrder:"ລະຫັດອໍເດີ້",
     specCollar:"ຄໍເສື້ອ",
@@ -566,8 +720,25 @@ const I18N = {
     heroDesc:"Pick a style, check the collar, sleeve and shoulder details, then message us to place your design.",
     ctaBrowse:"Browse all products",
     ctaWa:"Message on WhatsApp",
-    ctaWaShort:"Order via WhatsApp",
+    ctaWaShort:"Message on WhatsApp",
     ctaFbShort:"Message on Facebook",
+    designBtn:"Order a Design",
+    designTitle:"Order a Custom Design",
+    designIntro:"Fill in the details below, then send them to our admin on WhatsApp.",
+    designModel:"Choose a base design",
+    designModelHint:"Pick from our existing products (shirt or sticker)",
+    designNone:"No design selected yet",
+    designNeedModel:"Please choose a base design first",
+    designFront:"Front name",
+    designBack:"Back name",
+    designBackUpper:"Back name (upper)",
+    designBackLower:"Back name (lower)",
+    designSleeve:"Sleeve name",
+    designVertical:"Vertical",
+    designHorizontal:"Horizontal",
+    designExtra:"Additional details",
+    designExtraPh:"Anything else you want changed or added...",
+    designSend:"Send via WhatsApp",
     viewDetail:"View details",
     specOrder:"Order code",
     specCollar:"Collar",
@@ -704,7 +875,6 @@ const NAME_TR = {
   p1:{th:"THE ONE",la:"THE ONE",en:"THE ONE"},
   p2:{th:"THE ONE",la:"THE ONE",en:"THE ONE"},
   p3:{th:"GTA VI",la:"GTA VI",en:"GTA VI"},
-  p4:{th:".",la:".",en:"."},
   p5:{th:".",la:".",en:"."},
   p6:{th:".",la:".",en:"."},
   p7:{th:".",la:".",en:"."},
@@ -756,7 +926,29 @@ const NAME_TR = {
   t76:{th:"JNK",la:"JNK",en:"JNK"},
   t77:{th:"ປ້ຳນ້ຳມັນ ແສງຈະເລີນ",la:"ປ້ຳນ້ຳມັນ ແສງຈະເລີນ",en:"ປ້ຳນ້ຳມັນ ແສງຈະເລີນ"},
   t78:{th:"นางฟ้ายาพิษ",la:"นางฟ้ายาพิษ",en:"นางฟ้ายาพิษ"},
-  t79:{th:"นากอก FC",la:"นากอก FC",en:"นากอก FC"}
+  t79:{th:"นากอก FC",la:"นากอก FC",en:"นากอก FC"},
+  g3:{th:".",la:".",en:"."},
+  s19:{th:"ມສ ບຶງທະເລ",la:"ມສ ບຶງທະເລ",en:"ມສ ບຶງທະເລ"},
+  s20:{th:"BANKING INSTITUTE",la:"BANKING INSTITUTE",en:"BANKING INSTITUTE"},
+  s21:{th:"เสือน้อย7k",la:"เสือน้อย7k",en:"เสือน้อย7k"},
+  s22:{th:".",la:".",en:"."},
+  s23:{th:".",la:".",en:"."},
+  t80:{th:"GIANT",la:"GIANT",en:"GIANT"},
+  t81:{th:".",la:".",en:"."},
+  t82:{th:"ท้ายสวนมัน",la:"ท้ายสวนมัน",en:"ท้ายสวนมัน"},
+  t83:{th:"พ่อบ้านใจกล้า",la:"พ่อบ้านใจกล้า",en:"พ่อบ้านใจกล้า"},
+  t84:{th:"ครอบครัวบ้านหาด",la:"ครอบครัวบ้านหาด",en:"ครอบครัวบ้านหาด"},
+  t85:{th:"ຫຼ້າບໍລິການ ຫີນ-ຊາຍ",la:"ຫຼ້າບໍລິການ ຫີນ-ຊາຍ",en:"ຫຼ້າບໍລິການ ຫີນ-ຊາຍ"},
+  t86:{th:"SAIYTOOD",la:"SAIYTOOD",en:"SAIYTOOD"},
+  t87:{th:"ປ໋າທົງສັ່ງລຸຍ X ເສ່ຍບອຍ",la:"ປ໋າທົງສັ່ງລຸຍ X ເສ່ຍບອຍ",en:"ປ໋າທົງສັ່ງລຸຍ X ເສ່ຍບອຍ"},
+  t88:{th:"ສິງລໍວັນລວຍ",la:"ສິງລໍວັນລວຍ",en:"ສິງລໍວັນລວຍ"},
+  t89:{th:"สจ สองฝั่ง",la:"สจ สองฝั่ง",en:"สจ สองฝั่ง"},
+  t90:{th:"ສີສະຫວັນງານເຊື່ອມ",la:"ສີສະຫວັນງານເຊື່ອມ",en:"ສີສະຫວັນງານເຊື່ອມ"},
+  t91:{th:"ຮ້ານໂອໂຕ້ໂຟວິນ",la:"ຮ້ານໂອໂຕ້ໂຟວິນ",en:"ຮ້ານໂອໂຕ້ໂຟວິນ"},
+  t92:{th:"EDL 285",la:"EDL 285",en:"EDL 285"},
+  t93:{th:"F S T",la:"F S T",en:"F S T"},
+  t94:{th:"ค้ายสองอ้ายน้อง",la:"ค้ายสองอ้ายน้อง",en:"ค้ายสองอ้ายน้อง"},
+  p4:{th:",",la:",",en:","}
 };
 /* @ADMIN:NAME_TR:END */
 
@@ -779,93 +971,92 @@ const NAME_TR = {
 ------------------------------------ */
 /* @ADMIN:PRODUCTS:START */
 const PRODUCTS = [
-  {id:"t1",cat:"team",code:"M26-5004",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5004 copy.jpg"},
-  {id:"t2",cat:"team",code:"M26-5004",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg"},
-  {id:"t3",cat:"team",code:"M26-5004",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5004 V3 copy.jpg"},
-  {id:"t4",cat:"team",code:"M26-5005",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-5005 copy.jpg"},
-  {id:"t5",cat:"team",code:"M26-5006",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-5006 copy.jpg"},
-  {id:"t6",cat:"team",code:"M26-5007",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-5007 copy.jpg"},
-  {id:"t7",cat:"team",code:"M26-5010",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5010 copy.jpg"},
-  {id:"t8",cat:"team",code:"M26-5011",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5011 copy.jpg"},
-  {id:"t9",cat:"team",code:"M26-5012",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5012 copy.jpg"},
-  {id:"t10",cat:"team",code:"M26-5012",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5012 V2 copy.jpg"},
-  {id:"t11",cat:"team",code:"M26-5023",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5023 copy.jpg"},
-  {id:"t12",cat:"team",code:"M26-5023",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5023 V2 copy.jpg"},
-  {id:"t13",cat:"team",code:"M26-5024",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5024 copy.jpg"},
-  {id:"t14",cat:"team",code:"M26-5026",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5026 copy.jpg"},
-  {id:"t15",cat:"team",code:"M26-5026",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5026 V2 copy.jpg"},
-  {id:"t16",cat:"team",code:"M26-5027",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5027 copy.jpg"},
-  {id:"t17",cat:"team",code:"M26-5028",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-5028 copy.jpg"},
-  {id:"t18",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5029 copy.jpg"},
-  {id:"t19",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5029 V2 copy.jpg"},
-  {id:"t20",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-5029 V3 copy.jpg"},
-  {id:"t21",cat:"team",code:"M26-6005",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6005 copy.jpg"},
-  {id:"t22",cat:"team",code:"M26-6010",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-6010 copy.jpg"},
-  {id:"t23",cat:"team",code:"M26-6010",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6010 V2 copy.jpg"},
-  {id:"t24",cat:"team",code:"M26-6010",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6010 V5 copy.jpg"},
-  {id:"t25",cat:"team",code:"M26-6010",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-6010 V6 copy.jpg"},
-  {id:"t26",cat:"team",code:"M262-6012",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6012 copy.jpg"},
-  {id:"t27",cat:"team",code:"M26-6013",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-6013 copy.jpg"},
-  {id:"t28",cat:"team",code:"M26-6023",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6023 copy.jpg"},
-  {id:"t29",cat:"team",code:"M26-6024",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-6024 copy.jpg"},
-  {id:"t30",cat:"team",code:"M26-6024",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-6024 V2 copy.jpg"},
-  {id:"t31",cat:"team",code:"M26-7001",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7001 copy.jpg"},
-  {id:"t32",cat:"team",code:"M26-7001",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-7001 V2 copy.jpg"},
-  {id:"t33",cat:"team",code:"M26-7002",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7002 copy.jpg"},
-  {id:"t34",cat:"team",code:"M26-7003",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7003 copy.jpg"},
-  {id:"t35",cat:"team",code:"M26-7003",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-7003 V2 copy.jpg"},
-  {id:"t36",cat:"team",code:"M26-7004",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7004 copy.jpg"},
-  {id:"t37",cat:"team",code:"M26-7005",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7005 copy.jpg"},
-  {id:"t38",cat:"team",code:"M26-7006",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 copy.jpg"},
-  {id:"t39",cat:"team",code:"M26-7006",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 V2 copy.jpg"},
-  {id:"t40",cat:"team",code:"M26-7006",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 V3 copy.jpg"},
-  {id:"t41",cat:"team",code:"M26-7006",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7006 V4 copy.jpg"},
-  {id:"t42",cat:"team",code:"M26-7007",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7007 copy.jpg"},
-  {id:"t43",cat:"team",code:"M26-7007",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7007 V2 copy.jpg"},
-  {id:"t44",cat:"team",code:"M26-7009",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7009 copy.jpg"},
-  {id:"t45",cat:"team",code:"M26-7010",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7010 copy.jpg"},
-  {id:"t46",cat:"team",code:"M26-7011",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Team Jersey/M26-7011 copy.jpg"},
-  {id:"t47",cat:"team",code:"M26-7012",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-7012 copy.jpg"},
-  {id:"t48",cat:"team",code:"M26-7012",collar:"round",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-7012 V2 copy.jpg"},
-  {id:"t49",cat:"team",code:"M26-7015",collar:"polo",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-7015 copy.jpg"},
-  {id:"t50",cat:"team",code:"M26-8001",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-8001 V3 copy.jpg"},
-  {id:"t51",cat:"team",code:"M26-8001",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-8001 V4 copy.jpg"},
-  {id:"t52",cat:"team",code:"M26-8015",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-8015 V2 copy.jpg"},
-  {id:"t53",cat:"team",code:"M26-8016",collar:"round",sleeve:"long",shoulder:"normal",price:130000,img:"Img/ORDER/Team Jersey/M26-8016 copy.jpg"},
-  {id:"t54",cat:"team",code:"M26-8019",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Team Jersey/M26-8019 copy.jpg"},
-  {id:"t55",cat:"team",code:"M26-8020",collar:"fivelieam",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Team Jersey/M26-8020 copy.jpg"},
-  {id:"t57",cat:"sport",code:"M26-2010",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8010 copy.jpg"},
-  {id:"t58",cat:"sport",code:"M26-8012",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8012 copy.jpg"},
-  {id:"s1",cat:"sport",code:"K26-6021",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/K26-6021 copy.jpg"},
-  {id:"s2",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Sport Jersey/K26-7011 copy.jpg"},
-  {id:"s3",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:130000,img:"Img/ORDER/Sport Jersey/K26-7011 V2 copy.jpg"},
-  {id:"s4",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Sport Jersey/K26-7011 V3 copy.jpg"},
-  {id:"s5",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Sport Jersey/K26-7011 V5 copy.jpg"},
-  {id:"s6",cat:"sport",code:"M26-5030",collar:"polo",sleeve:"long",shoulder:"normal",price:150000,img:"Img/ORDER/Sport Jersey/M26-5030 copy.jpg"},
-  {id:"s7",cat:"sport",code:"M26-6004",collar:"polo",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-6004 copy.jpg"},
-  {id:"s11",cat:"sport",code:"M26-6008",collar:"vneck",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Sport Jersey/M26-6008 copy.jpg"},
-  {id:"s12",cat:"sport",code:"M26-8003",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8003 copy.jpg"},
-  {id:"s13",cat:"sport",code:"M26-8004",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8004 copy.jpg"},
-  {id:"t59",cat:"sport",code:"M26-8005",collar:"vpok",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8005 copy.jpg"},
-  {id:"s8",cat:"sport",code:"M26-8006",collar:"round",sleeve:"short",shoulder:"slope",price:110000,img:"Img/ORDER/Sport Jersey/M26-8006 copy.jpg"},
-  {id:"s9",cat:"sport",code:"M26-8007",collar:"vneck",sleeve:"short",shoulder:"normal",price:110000,img:"Img/ORDER/Sport Jersey/M26-8007 copy.jpg"},
-  {id:"s10",cat:"sport",code:"M26-8011",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:130000,img:"Img/ORDER/Sport Jersey/M26-8011 copy.jpg"},
-  {id:"p1",cat:"screen",code:"M26-5015",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-5015 copy.jpg"},
-  {id:"p2",cat:"screen",code:"M26-5015",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-5015 V2 copy.jpg"},
-  {id:"p3",cat:"screen",code:"M26-8013",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8013 copy.jpg"},
-  {id:"p4",cat:"screen",code:"M26-8025",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8025 copy.jpg"},
-  {id:"p5",cat:"screen",code:"M26-8030",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8030 copy.jpg"},
-  {id:"p6",cat:"screen",code:"M26-8022",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8022 copy.jpg"},
-  {id:"p7",cat:"screen",code:"M26-8024",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8024 copy.jpg"},
-  {id:"p8",cat:"screen",code:"M62-8025",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8025 copy.jpg"},
-  {id:"p9",cat:"screen",code:"M26-8026",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8026 copy.jpg"},
-  {id:"p10",cat:"screen",code:"M26-8028",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8028 copy.jpg"},
-  {id:"p11",cat:"screen",code:"M26-8029",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8029 copy.jpg"},
-  {id:"p12",cat:"screen",code:"M26-8030",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8030 copy.jpg"},
-  {id:"p13",cat:"screen",code:"M268031",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8031 copy.jpg"},
-  {id:"p14",cat:"screen",code:"M26-8032",collar:"round",sleeve:"short",shoulder:"normal",price:225000,img:"Img/ORDER/Screen/M26-8032 copy.jpg"},
-  {id:"g1",cat:"pants",code:"M26-6020",leg:"short",price:90000,img:"Img/ORDER/Pant/M26-6020 short copy.jpg"},
-  {id:"g2",cat:"pants",code:"M26-6024",leg:"short",price:90000,img:"Img/ORDER/Pant/M26-6024 SONG copy.jpg"},
+  {id:"t1",cat:"team",code:"M26-5004",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5004 copy.jpg"},
+  {id:"t2",cat:"team",code:"M26-5004",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5004 V2 copy.jpg"},
+  {id:"t3",cat:"team",code:"M26-5004",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5004 V3 copy.jpg"},
+  {id:"t4",cat:"team",code:"M26-5005",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Team Jersey/M26-5005 copy.jpg"},
+  {id:"t5",cat:"team",code:"M26-5006",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Team Jersey/M26-5006 copy.jpg"},
+  {id:"t6",cat:"team",code:"M26-5007",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Team Jersey/M26-5007 copy.jpg"},
+  {id:"t7",cat:"team",code:"M26-5010",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5010 copy.jpg"},
+  {id:"t8",cat:"team",code:"M26-5011",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5011 copy.jpg"},
+  {id:"t9",cat:"team",code:"M26-5012",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5012 copy.jpg"},
+  {id:"t10",cat:"team",code:"M26-5012",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5012 V2 copy.jpg"},
+  {id:"t11",cat:"team",code:"M26-5023",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5023 copy.jpg"},
+  {id:"t12",cat:"team",code:"M26-5023",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5023 V2 copy.jpg"},
+  {id:"t13",cat:"team",code:"M26-5024",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5024 copy.jpg"},
+  {id:"t14",cat:"team",code:"M26-5026",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5026 copy.jpg"},
+  {id:"t15",cat:"team",code:"M26-5026",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5026 V2 copy.jpg"},
+  {id:"t16",cat:"team",code:"M26-5027",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5027 copy.jpg"},
+  {id:"t17",cat:"team",code:"M26-5028",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-5028 copy.jpg"},
+  {id:"t18",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5029 copy.jpg"},
+  {id:"t19",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5029 V2 copy.jpg"},
+  {id:"t20",cat:"team",code:"M26-5029",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-5029 V3 copy.jpg"},
+  {id:"t21",cat:"team",code:"M26-6005",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-6005 copy.jpg"},
+  {id:"t22",cat:"team",code:"M26-6010",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-6010 copy.jpg"},
+  {id:"t23",cat:"team",code:"M26-6010",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-6010 V2 copy.jpg"},
+  {id:"t24",cat:"team",code:"M26-6010",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-6010 V5 copy.jpg"},
+  {id:"t25",cat:"team",code:"M26-6010",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-6010 V6 copy.jpg"},
+  {id:"t26",cat:"team",code:"M262-6012",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-6012 copy.jpg"},
+  {id:"t27",cat:"team",code:"M26-6013",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-6013 copy.jpg"},
+  {id:"t28",cat:"team",code:"M26-6023",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-6023 copy.jpg"},
+  {id:"t29",cat:"team",code:"M26-6024",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Team Jersey/M26-6024 copy.jpg"},
+  {id:"t30",cat:"team",code:"M26-6024",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-6024 V2 copy.jpg"},
+  {id:"t31",cat:"team",code:"M26-7001",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7001 copy.jpg"},
+  {id:"t32",cat:"team",code:"M26-7001",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-7001 V2 copy.jpg"},
+  {id:"t33",cat:"team",code:"M26-7002",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7002 copy.jpg"},
+  {id:"t34",cat:"team",code:"M26-7003",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7003 copy.jpg"},
+  {id:"t35",cat:"team",code:"M26-7003",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-7003 V2 copy.jpg"},
+  {id:"t36",cat:"team",code:"M26-7004",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7004 copy.jpg"},
+  {id:"t37",cat:"team",code:"M26-7005",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7005 copy.jpg"},
+  {id:"t38",cat:"team",code:"M26-7006",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7006 copy.jpg"},
+  {id:"t39",cat:"team",code:"M26-7006",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7006 V2 copy.jpg"},
+  {id:"t40",cat:"team",code:"M26-7006",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7006 V3 copy.jpg"},
+  {id:"t41",cat:"team",code:"M26-7006",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7006 V4 copy.jpg"},
+  {id:"t42",cat:"team",code:"M26-7007",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7007 copy.jpg"},
+  {id:"t43",cat:"team",code:"M26-7007",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7007 V2 copy.jpg"},
+  {id:"t44",cat:"team",code:"M26-7009",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7009 copy.jpg"},
+  {id:"t45",cat:"team",code:"M26-7010",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7010 copy.jpg"},
+  {id:"t46",cat:"team",code:"M26-7011",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Team Jersey/M26-7011 copy.jpg"},
+  {id:"t47",cat:"team",code:"M26-7012",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-7012 copy.jpg"},
+  {id:"t48",cat:"team",code:"M26-7012",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-7012 V2 copy.jpg"},
+  {id:"t49",cat:"team",code:"M26-7015",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-7015 copy.jpg"},
+  {id:"t50",cat:"team",code:"M26-8001",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-8001 V3 copy.jpg"},
+  {id:"t51",cat:"team",code:"M26-8001",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-8001 V4 copy.jpg"},
+  {id:"t52",cat:"team",code:"M26-8015",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-8015 V2 copy.jpg"},
+  {id:"t53",cat:"team",code:"M26-8016",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-8016 copy.jpg"},
+  {id:"t54",cat:"team",code:"M26-8019",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-8019 copy.jpg"},
+  {id:"t55",cat:"team",code:"M26-8020",collar:"fivelieam",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-8020 copy.jpg"},
+  {id:"t57",cat:"sport",code:"M26-8010",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-8010 copy.jpg"},
+  {id:"t58",cat:"sport",code:"M26-8012",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-8012 copy.jpg"},
+  {id:"s1",cat:"sport",code:"K26-6021",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/K26-6021 copy.jpg"},
+  {id:"s2",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Sport Jersey/K26-7011 copy.jpg"},
+  {id:"s3",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Sport Jersey/K26-7011 V2 copy.jpg"},
+  {id:"s4",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Sport Jersey/K26-7011 V3 copy.jpg"},
+  {id:"s5",cat:"sport",code:"K26-7011",collar:"pokvtud",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Sport Jersey/K26-7011 V5 copy.jpg"},
+  {id:"s6",cat:"sport",code:"M26-5030",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Sport Jersey/M26-5030 copy.jpg"},
+  {id:"s7",cat:"sport",code:"M26-6004",collar:"polo",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-6004 copy.jpg"},
+  {id:"s11",cat:"sport",code:"M26-6008",collar:"vneck",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Sport Jersey/M26-6008 copy.jpg"},
+  {id:"s12",cat:"sport",code:"M26-8003",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-8003 copy.jpg"},
+  {id:"s13",cat:"sport",code:"M26-8004",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-8004 copy.jpg"},
+  {id:"t59",cat:"sport",code:"M26-8005",collar:"vpok",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-8005 copy.jpg"},
+  {id:"s8",cat:"sport",code:"M26-8006",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Sport Jersey/M26-8006 copy.jpg"},
+  {id:"s9",cat:"sport",code:"M26-8007",collar:"vneck",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Sport Jersey/M26-8007 copy.jpg"},
+  {id:"s10",cat:"sport",code:"M26-8011",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-8011 copy.jpg"},
+  {id:"p1",cat:"screen",code:"M26-5015",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-5015 copy.jpg"},
+  {id:"p2",cat:"screen",code:"M26-5015",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-5015 V2 copy.jpg"},
+  {id:"p3",cat:"screen",code:"M26-8013",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8013 copy.jpg"},
+  {id:"p5",cat:"screen",code:"M26-8030",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8030 copy.jpg"},
+  {id:"p6",cat:"screen",code:"M26-8022",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8022 copy.jpg"},
+  {id:"p7",cat:"screen",code:"M26-8024",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8024 copy.jpg"},
+  {id:"p8",cat:"screen",code:"M62-8025",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8025 copy.jpg"},
+  {id:"p9",cat:"screen",code:"M26-8026",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8026 copy.jpg"},
+  {id:"p10",cat:"screen",code:"M26-8028",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8028 copy.jpg"},
+  {id:"p11",cat:"screen",code:"M26-8029",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8029 copy.jpg"},
+  {id:"p12",cat:"screen",code:"M26-8030",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8030 copy.jpg"},
+  {id:"p13",cat:"screen",code:"M268031",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8031 copy.jpg"},
+  {id:"p14",cat:"screen",code:"M26-8032",collar:"round",sleeve:"short",shoulder:"normal",price:250000,img:"Img/ORDER/Screen/M26-8032 copy.jpg"},
+  {id:"g1",cat:"pants",code:"M26-6020",leg:"short",price:115000,img:"Img/ORDER/Pant/M26-6020 short copy.jpg"},
+  {id:"g2",cat:"pants",code:"M26-6024",leg:"short",price:115000,img:"Img/ORDER/Pant/M26-6024 SONG copy.jpg"},
   {id:"st1",cat:"sticker",code:"1",price:180000,img:"Img/ORDER/Sticker/1 copy.jpg"},
   {id:"st2",cat:"sticker",code:"2",price:180000,img:"Img/ORDER/Sticker/2 copy.jpg"},
   {id:"st3",cat:"sticker",code:"4",price:180000,img:"Img/ORDER/Sticker/4 copy.jpg"},
@@ -878,34 +1069,56 @@ const PRODUCTS = [
   {id:"f4",cat:"fabric",code:"...",price:110000,img:"Img/Texture/honey.jpeg"},
   {id:"f5",cat:"fabric",code:"...",price:110000,img:"Img/Texture/rice.jpeg"},
   {id:"f6",cat:"fabric",code:"...",price:110000,img:"Img/Texture/wire mesh.jpeg"},
-  {id:"p15",cat:"screen",code:"M26-8035",collar:"round",sleeve:"short",shoulder:"slope",price:225000,img:"Img/M26-8035 V2 copy.jpg"},
-  {id:"p16",cat:"sport",code:"M26-8033",collar:"round",sleeve:"short",shoulder:"normal",price:115000,img:"Img/ORDER/Sport Jersey/M26-8033 copy.jpg"},
-  {id:"s14",cat:"sport",code:"M26-8036",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Sport Jersey/M26-8036 copy.jpg"},
-  {id:"s15",cat:"sport",code:"M26-8036",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Sport Jersey/M26-8036 V2 copy.jpg"},
-  {id:"s16",cat:"sport",code:"ທ26-9011",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:135000,img:"Img/ORDER/Sport Jersey/M26-9011 copy.jpg"},
-  {id:"s17",cat:"sport",code:"M26-9013",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:135000,img:"Img/ORDER/Sport Jersey/M26-9013 copy.jpg"},
-  {id:"s18",cat:"sport",code:"M26-9013",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:135000,img:"Img/ORDER/Sport Jersey/M26-9013 V3 copy.jpg"},
-  {id:"t56",cat:"team",code:"M26-8034",collar:"polo",sleeve:"long",shoulder:"normal",price:155000,img:"Img/ORDER/Team Jersey/M26-8034 copy.jpg"},
-  {id:"t60",cat:"team",code:"M26-8034",collar:"polo",sleeve:"long",shoulder:"normal",price:155000,img:"Img/ORDER/Team Jersey/M26-8034 copy.jpg"},
-  {id:"t61",cat:"team",code:"M26-8037",collar:"round",sleeve:"long",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-8037 copy.jpg"},
-  {id:"t62",cat:"team",code:"M26-8038",collar:"polo",sleeve:"long",shoulder:"normal",price:155000,img:"Img/ORDER/Team Jersey/M26-8038 copy.jpg"},
-  {id:"t63",cat:"team",code:"M26-8039",collar:"polo",sleeve:"long",shoulder:"normal",price:155000,img:"Img/ORDER/Team Jersey/M26-8039 copy.jpg"},
-  {id:"t64",cat:"team",code:"M26-9001",collar:"polo",sleeve:"long",shoulder:"normal",price:155000,img:"Img/ORDER/Team Jersey/M26-9001 copy.jpg"},
-  {id:"t65",cat:"team",code:"M26-9002",collar:"round",sleeve:"long",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9002 copy.jpg"},
-  {id:"t66",cat:"team",code:"M26-9003",collar:"round",sleeve:"long",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9003 copy.jpg"},
-  {id:"t67",cat:"team",code:"M26-9005",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9005 copy.jpg"},
-  {id:"t68",cat:"team",code:"M26-9006",collar:"round",sleeve:"short",shoulder:"normal",price:115000,img:"Img/ORDER/Team Jersey/M26-9006 copy.jpg"},
-  {id:"t69",cat:"team",code:"M26-9007",collar:"round",sleeve:"long",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9007 V2 copy.jpg"},
-  {id:"t70",cat:"team",code:"M26-9008",collar:"round",sleeve:"sleeveless",shoulder:"normal",price:115000,img:"Img/ORDER/Team Jersey/M26-9008 V2 copy.jpg"},
-  {id:"t71",cat:"team",code:"M26-9010",collar:"round",sleeve:"short",shoulder:"normal",price:115000,img:"Img/ORDER/Team Jersey/M26-9010 copy.jpg"},
-  {id:"t72",cat:"team",code:"M26-9012",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9012 copy.jpg"},
-  {id:"t73",cat:"team",code:"M26-9014",collar:"round",sleeve:"long",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9014 copy.jpg"},
-  {id:"t74",cat:"team",code:"M26-9015",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9015 V2 copy.jpg"},
-  {id:"t75",cat:"team",code:"M26-9016",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9016 copy.jpg"},
-  {id:"t76",cat:"team",code:"M26-9017",collar:"round",sleeve:"short",shoulder:"normal",price:115000,img:"Img/ORDER/Team Jersey/M26-9017 copy.jpg"},
-  {id:"t77",cat:"team",code:"M26-9018",collar:"round",sleeve:"long",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9018 V2 copy.jpg"},
-  {id:"t78",cat:"team",code:"?26-9019",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9019 copy.jpg"},
-  {id:"t79",cat:"team",code:"M26-9020",collar:"polo",sleeve:"short",shoulder:"normal",price:135000,img:"Img/ORDER/Team Jersey/M26-9020 copy.jpg"}
+  {id:"p15",cat:"screen",code:"M26-8035",collar:"round",sleeve:"short",shoulder:"slope",price:250000,img:"Img/ORDER/Screen/M26-8035 V2 copy.jpg"},
+  {id:"p16",cat:"sport",code:"M26-8033",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Sport Jersey/M26-8033 copy.jpg"},
+  {id:"s14",cat:"sport",code:"M26-8036",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Sport Jersey/M26-8036 copy.jpg"},
+  {id:"s15",cat:"sport",code:"M26-8036",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Sport Jersey/M26-8036 V2 copy.jpg"},
+  {id:"s16",cat:"sport",code:"M26-9011",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-9011 copy.jpg"},
+  {id:"s17",cat:"sport",code:"M26-9013",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-9013 copy.jpg"},
+  {id:"s18",cat:"sport",code:"M26-9013",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-9013 V3 copy.jpg"},
+  {id:"t56",cat:"team",code:"M26-8034",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-8034 copy.jpg"},
+  {id:"t60",cat:"team",code:"M26-8034",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-8034 copy.jpg"},
+  {id:"t61",cat:"team",code:"M26-8037",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-8037 copy.jpg"},
+  {id:"t62",cat:"team",code:"M26-8038",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-8038 copy.jpg"},
+  {id:"t63",cat:"team",code:"M26-8039",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-8039 copy.jpg"},
+  {id:"t64",cat:"team",code:"M26-9001",collar:"polo",sleeve:"long",shoulder:"normal",price:165000,img:"Img/ORDER/Team Jersey/M26-9001 copy.jpg"},
+  {id:"t65",cat:"team",code:"M26-9002",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9002 copy.jpg"},
+  {id:"t66",cat:"team",code:"M26-9003",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9003 copy.jpg"},
+  {id:"t67",cat:"team",code:"M26-9005",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9005 copy.jpg"},
+  {id:"t68",cat:"team",code:"M26-9006",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-9006 copy.jpg"},
+  {id:"t69",cat:"team",code:"M26-9007",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9007 V2 copy.jpg"},
+  {id:"t70",cat:"team",code:"M26-9008",collar:"round",sleeve:"sleeveless",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-9008 V2 copy.jpg"},
+  {id:"t71",cat:"team",code:"M26-9010",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-9010 copy.jpg"},
+  {id:"t72",cat:"team",code:"M26-9012",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9012 copy.jpg"},
+  {id:"t73",cat:"team",code:"M26-9014",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9014 copy.jpg"},
+  {id:"t74",cat:"team",code:"M26-9015",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9015 V2 copy.jpg"},
+  {id:"t75",cat:"team",code:"M26-9016",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9016 copy.jpg"},
+  {id:"t76",cat:"team",code:"M26-9017",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-9017 copy.jpg"},
+  {id:"t77",cat:"team",code:"M26-9018",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9018 V2 copy.jpg"},
+  {id:"t78",cat:"team",code:"M26-9019",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9019 copy.jpg"},
+  {id:"t79",cat:"team",code:"M26-9020",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9020 copy.jpg"},
+  {id:"g3",cat:"pants",code:"M26-9022",leg:"short",price:115000,img:"Img/ORDER/Pant/M26-9022 P copy.jpg"},
+  {id:"s19",cat:"sport",code:"M26-9030",collar:"round",sleeve:"short",shoulder:"slope",price:125000,img:"Img/ORDER/Sport Jersey/M26-9030 copy.jpg"},
+  {id:"s20",cat:"sport",code:"M26-9032",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-9032 copy.jpg"},
+  {id:"s21",cat:"sport",code:"M26-10005",collar:"polo",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-10005 copy.jpg"},
+  {id:"s22",cat:"sport",code:"M26-9004",collar:"pokvtud",sleeve:"short",shoulder:"slope",price:145000,img:"Img/ORDER/Sport Jersey/M26-9004 copy.jpg"},
+  {id:"s23",cat:"sport",code:"2610-1006",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Sport Jersey/26-10-1006 copy.jpg"},
+  {id:"t80",cat:"team",code:"M26-9033",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9033 copy.jpg"},
+  {id:"t81",cat:"team",code:"M26-9029",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9029 copy.jpg"},
+  {id:"t82",cat:"team",code:"M26-9028",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9028 copy.jpg"},
+  {id:"t83",cat:"team",code:"M26-9034",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9034 copy.jpg"},
+  {id:"t84",cat:"team",code:"M26-9036",collar:"vneck",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9036 copy.jpg"},
+  {id:"t85",cat:"team",code:"M26-9040",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/M26-9040 copy.jpg"},
+  {id:"t86",cat:"team",code:"M26-9042",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-9042 copy.jpg"},
+  {id:"t87",cat:"team",code:"M26-10001",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-10001 copy.jpg"},
+  {id:"t88",cat:"team",code:"M26-10004",collar:"round",sleeve:"long",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/M26-10004 copy.jpg"},
+  {id:"t89",cat:"team",code:"26-10-1002",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/26-10-1002 copy.jpg"},
+  {id:"t90",cat:"team",code:"2610-10007",collar:"round",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/2610-10007 V2 copy.jpg"},
+  {id:"t91",cat:"team",code:"2610-10008",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/2610-10008 copy.jpg"},
+  {id:"t92",cat:"team",code:"2610-10010",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/2610-10010 copy.jpg"},
+  {id:"t93",cat:"team",code:"2610-10013",collar:"fivelieam",sleeve:"short",shoulder:"normal",price:125000,img:"Img/ORDER/Team Jersey/2610-10013 copy.jpg"},
+  {id:"t94",cat:"team",code:"2610-10015",collar:"polo",sleeve:"short",shoulder:"normal",price:145000,img:"Img/ORDER/Team Jersey/2610-10015 copy.jpg"},
+  {id:"p4",cat:"screen",code:"M26-8025",collar:"round",sleeve:"short",shoulder:"normal",price:247000,img:"Img/ORDER/Screen/M26-8025 copy.jpg"}
 ];
 /* @ADMIN:PRODUCTS:END */
 
@@ -949,6 +1162,14 @@ function thumbUrl(imgPath){
 ------------------------------------ */
 function parseCode(code){
   if(!code) return null;
+  // รูปแบบใหม่: YYMM-NNN เช่น 2610-001 = ปี 2026 เดือน 10 ชิ้นที่ 1 (เดือน 1-9 ใส่ 0 นำหน้า เช่น 2603-005)
+  const n = /^(\d{2})(\d{2})-(\d{3,})$/.exec(code.trim());
+  if(n){
+    const year = parseInt(n[1],10), month = parseInt(n[2],10), seq = parseInt(n[3],10);
+    if(month < 1 || month > 12) return null;
+    return {year, month, seq, key: year*100000 + month*1000 + seq};
+  }
+  // รูปแบบเดิม (สินค้าที่เพิ่มไปแล้วยังใช้รหัสเดิม): M26-8001
   const m = /^[A-Za-z]+(\d{2})\d*-(\d{3,5})$/.exec(code.trim());
   if(!m) return null;
   const year = parseInt(m[1],10);
@@ -1066,10 +1287,11 @@ function catLabel(cat){ return I18N[lang].cats[cat]; }
 
 function renderNav(){
   const wrap = document.getElementById("railItems");
-  wrap.innerHTML = NAV_ORDER.map(cat=>
+  wrap.innerHTML = `<button class="tag-tab design-tab" id="designTab" type="button">${t("designBtn")}</button>` + NAV_ORDER.map(cat=>
     `<button class="tag-tab ${cat===activeCat?'active':''}" data-cat="${cat}">${catLabel(cat)}</button>`
   ).join("");
-  wrap.querySelectorAll(".tag-tab").forEach(btn=>{
+  document.getElementById("designTab").addEventListener("click", openDesign);
+  wrap.querySelectorAll(".tag-tab[data-cat]").forEach(btn=>{
     btn.addEventListener("click",()=>{
       activeCat = btn.dataset.cat;
       renderNav();
@@ -1088,7 +1310,7 @@ function cardHtml(p){
       <span class="code">${p.code}</span>
       <h3>${NAME_TR[p.id][lang]}</h3>
       <div class="meta">${cardMeta(p)}</div>
-      <div class="price">${formatPrice(p)}</div>
+      ${p.cat==="fabric" ? "" : `<div class="price">${formatPrice(p)}</div>`}
       <button class="view-btn">${t("viewDetail")}</button>
     </article>
   `;
@@ -1159,7 +1381,7 @@ function specRows(p){
     rows.push([t("specSleeve"), TERMS.sleeve[p.sleeve][lang]]);
     rows.push([t("specShoulder"), TERMS.shoulder[p.shoulder][lang]]);
   }
-  rows.push([t("specPrice"), formatPrice(p)]);
+  if(p.cat !== "fabric") rows.push([t("specPrice"), formatPrice(p)]);
   return rows;
 }
 
@@ -1173,7 +1395,7 @@ function openModal(id){
   document.getElementById("specBody").innerHTML = specRows(p).map(([k,v])=>
     `<tr><td class="k">${k}</td><td>${v}</td></tr>`
   ).join("");
-  const waMsg = encodeURIComponent(`สนใจสั่ง ${NAME_TR[p.id][lang]} (${p.code})`);
+  const waMsg = encodeURIComponent(`ສົນໃຈແບບເສື້ອແບບນີ້ ${NAME_TR[p.id][lang]} (${p.code})`);
   document.getElementById("modalWa").href = `${CONTACT.whatsapp}?text=${waMsg}`;
   document.getElementById("modalFb").href = CONTACT.facebook;
   document.getElementById("modalOverlay").classList.add("open");
@@ -1193,6 +1415,8 @@ function applyStaticText(){
   document.getElementById("footerAddressText").textContent = CONTACT.address;
   document.documentElement.lang = lang === "en" ? "en" : (lang === "la" ? "lo" : "th");
   document.getElementById("searchInput").placeholder = t("searchPlaceholder");
+  document.getElementById("dpSearch").placeholder = t("searchPlaceholder");
+  document.getElementById("dExtra").placeholder = t("designExtraPh");
   const sortSel = document.getElementById("sortSelect");
   sortSel.options[0].textContent = t("sortNewest");
   sortSel.options[1].textContent = t("sortOldest");
@@ -1206,6 +1430,8 @@ function setLang(l){
   applyStaticText();
   renderNav();
   renderGrid();
+  renderDesignPicker();
+  renderDesignSelected();
 }
 
 document.querySelectorAll(".lang-switch button").forEach(b=>{
@@ -1276,6 +1502,117 @@ themeToggle.addEventListener("click",()=>{
   const isDark = html.getAttribute("data-theme")==="dark";
   html.setAttribute("data-theme", isDark ? "light":"dark");
   themeToggle.textContent = isDark ? "🌙" : "☀️";
+});
+
+/* ---------- สั่งออกแบบ (ส่งรายละเอียดเข้า WhatsApp แอดมิน) ----------
+   เลือกแบบต้นแบบจากสินค้าที่มี (เสื้อ/สติกเกอร์) -> กรอกชื่อ -> ส่งเป็นข้อความไปที่ CONTACT.whatsapp
+   ข้อความที่ส่งเป็นภาษาลาวเสมอ (เหมือนข้อความสั่งซื้อปกติ)
+------------------------------------ */
+const DESIGN_CATS = ["team","sport","screen","sticker"];
+let designCat = "all";
+let designSearch = "";
+let designPick = null;
+
+function openDesign(){
+  renderDesignPicker();
+  renderDesignSelected();
+  document.getElementById("designOverlay").classList.add("open");
+}
+function closeDesign(){
+  document.getElementById("designOverlay").classList.remove("open");
+}
+
+function dpThumb(p){
+  return `<img src="${thumbUrl(p.img)}" alt="" loading="lazy" decoding="async" onerror="if(!this.dataset.fb){this.dataset.fb='1';this.src='${p.img}';}else{this.style.visibility='hidden'}">`;
+}
+
+function renderDesignPicker(){
+  const chips = document.getElementById("dpChips");
+  chips.innerHTML = ["all", ...DESIGN_CATS].map(c=>
+    `<button type="button" class="dp-chip ${c===designCat?'active':''}" data-c="${c}">${catLabel(c)}</button>`
+  ).join("");
+  chips.querySelectorAll(".dp-chip").forEach(b=>b.addEventListener("click",()=>{
+    designCat = b.dataset.c;
+    renderDesignPicker();
+  }));
+
+  let items = PRODUCTS.filter(p=>DESIGN_CATS.includes(p.cat) && p.img);
+  if(designCat !== "all") items = items.filter(p=>p.cat===designCat);
+  if(designSearch) items = items.filter(p=>p.code.toLowerCase().includes(designSearch));
+  const grid = document.getElementById("dpGrid");
+  if(!items.length){
+    grid.innerHTML = `<div class="dp-empty">${t("noResults")}</div>`;
+    return;
+  }
+  grid.innerHTML = sortItems(items).map(({p})=>
+    `<button type="button" class="dp-item ${designPick && designPick.id===p.id ? 'sel':''}" data-id="${p.id}" title="${p.code}">${dpThumb(p)}<span>${p.code}</span></button>`
+  ).join("");
+}
+
+function renderDesignSelected(){
+  const box = document.getElementById("dpSelected");
+  if(!designPick){
+    box.innerHTML = `<span class="none">${t("designNone")}</span>`;
+  } else {
+    const p = designPick;
+    box.innerHTML = `${dpThumb(p)}<div><strong>${p.code}</strong><small>${catLabel(p.cat)}</small></div>`;
+  }
+  // สติกเกอร์ไม่ต้องกรอกชื่อบนเสื้อ
+  document.getElementById("designShirtFields").style.display = (designPick && designPick.cat==="sticker") ? "none" : "";
+}
+
+function buildDesignMessage(){
+  const val = id => document.getElementById(id).value.trim() || "-";
+  const p = designPick;
+  const isSticker = p.cat === "sticker";
+  const nm = NAME_TR[p.id] ? NAME_TR[p.id][lang] : "";
+  const model = p.code + (nm && nm.length > 1 && nm !== "No name" ? ` (${nm})` : "");
+  const lines = [
+    "*ສົນໃຈສັ່ງອອກແບບ*",
+    "",
+    `${isSticker ? "ແບບສະຕິກເກີ້ຕົ້ນແບບ" : "ແບບເສື້ອຕົ້ນແບບ"}: ${model}`
+  ];
+  if(!isSticker){
+    const sleeve = document.getElementById("dSleeve").value.trim();
+    const dir = document.querySelector('input[name="dSleeveDir"]:checked').value === "v" ? "ແນວຕັ້ງ" : "ແນວນອນ";
+    lines.push(
+      `ຊື່ດ້ານໜ້າ: ${val("dFront")}`,
+      `ຊື່ດ້ານຫຼັງ (ເທິງ): ${val("dBack")}`,
+      `ຊື່ດ້ານຫຼັງ (ດ້ານລຸ່ມ): ${val("dBackLower")}`,
+      `ຊື່ເທິງແຂນ: ${sleeve ? `${sleeve} (${dir})` : "-"}`
+    );
+  }
+  lines.push(`ລາຍລະອຽດເພີ່ມເຕີມ: ${val("dExtra")}`);
+  return lines.join("\n");
+}
+
+document.getElementById("ctaDesign").addEventListener("click", openDesign);
+document.getElementById("designClose").addEventListener("click", closeDesign);
+document.getElementById("designOverlay").addEventListener("click",e=>{
+  if(e.target.id==="designOverlay") closeDesign();
+});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDesign(); });
+document.getElementById("dpGrid").addEventListener("click",e=>{
+  const btn = e.target.closest(".dp-item");
+  if(!btn) return;
+  designPick = PRODUCTS.find(x=>x.id===btn.dataset.id);
+  document.querySelectorAll("#dpGrid .dp-item").forEach(el=>el.classList.toggle("sel", el===btn));
+  document.getElementById("dpError").classList.remove("show");
+  renderDesignSelected();
+});
+document.getElementById("dpSearch").addEventListener("input",e=>{
+  designSearch = e.target.value.trim().toLowerCase();
+  renderDesignPicker();
+});
+document.getElementById("designSend").addEventListener("click",()=>{
+  if(!designPick){
+    const err = document.getElementById("dpError");
+    err.classList.add("show");
+    err.scrollIntoView({block:"center",behavior:"smooth"});
+    return;
+  }
+  const url = `${CONTACT.whatsapp}?text=${encodeURIComponent(buildDesignMessage())}`;
+  window.open(url, "_blank");
 });
 
 /* init */
